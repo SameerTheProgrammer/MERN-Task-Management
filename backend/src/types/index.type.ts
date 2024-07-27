@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { IUser } from "../models/user.model";
 
 export interface IUserData {
     name: string;
@@ -18,4 +19,15 @@ export interface IUserLoginData {
 
 export interface IUserLoginRequest extends Request {
     body: IUserLoginData;
+}
+
+export interface AuthMiddlewareProps extends Request {
+    userId?: string;
+    user?: IUser;
+}
+
+export interface AuthMiddlewareRequest extends AuthMiddlewareProps {
+    cookies: {
+        task?: string;
+    };
 }

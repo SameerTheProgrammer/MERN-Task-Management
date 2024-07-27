@@ -2,7 +2,12 @@ import express, { RequestHandler } from "express";
 import { UserService } from "../service/User.Service";
 import { UserController } from "../controllers/User.Controller";
 import logger from "../config/logger";
-import { IUserLoginRequest, IUserRegisterRequest } from "../types/index.type";
+import {
+    AuthMiddlewareRequest,
+    IUserLoginRequest,
+    IUserRegisterRequest,
+} from "../types/index.type";
+import { isAuthenticated } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
@@ -24,5 +29,17 @@ router.post("/login", (req, res, next) => {
         next,
     ) as unknown as RequestHandler;
 });
+
+router.get(
+    "/",
+    isAuthenticated as unknown as RequestHandler,
+    (req, res, next) => {
+        userController.getSelfData(
+            req as AuthMiddlewareRequest,
+            res,
+            next,
+        ) as unknown as RequestHandler;
+    },
+);
 
 export default router;

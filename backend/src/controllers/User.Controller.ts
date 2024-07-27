@@ -1,5 +1,9 @@
 import { Logger } from "winston";
-import { IUserLoginRequest, IUserRegisterRequest } from "../types/index.type";
+import {
+    AuthMiddlewareRequest,
+    IUserLoginRequest,
+    IUserRegisterRequest,
+} from "../types/index.type";
 import { NextFunction, Response } from "express";
 import { UserService } from "../service/User.Service";
 import { setCookie } from "../utils/cookie";
@@ -70,6 +74,25 @@ export class UserController {
 
             setCookie(res, String(user.id));
             res.status(200).json({ id: user._id });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    async getSelfData(
+        req: AuthMiddlewareRequest,
+        res: Response,
+        next: NextFunction,
+    ) {
+        try {
+            this.logger.info("New request to get a profile data", {
+                id: req.userId,
+                email: req.user?.email,
+            });
+
+            const user = await this.UserService.findById(String(req.userId));
+
+            res.status(200).json({ user });
         } catch (error) {
             return next(error);
         }
