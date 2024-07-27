@@ -18,9 +18,7 @@ export const isAuthenticated = async (
 
     try {
         const decoded = jwt.verify(token, env.JWT_SECRET) as { id: string };
-        console.log(decoded);
-        const user = await userModel.findById(decoded);
-        console.log(user);
+        const user = await userModel.findById(decoded.id);
 
         if (!user) {
             return res.status(401).json({ message: "Invalid token" });
