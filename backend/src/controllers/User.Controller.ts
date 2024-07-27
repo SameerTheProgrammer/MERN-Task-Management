@@ -2,6 +2,7 @@ import { Logger } from "winston";
 import { IUserRegisterRequest } from "../types/index.type";
 import { NextFunction, Response } from "express";
 import { UserService } from "../service/User.Service";
+import { setCookie } from "../utils/cookie";
 
 export class UserController {
     constructor(
@@ -30,6 +31,8 @@ export class UserController {
             });
 
             this.logger.info("User has been registered", { id: newUser._id });
+
+            setCookie(res, String(newUser._id));
             res.status(201).json({ id: newUser._id });
         } catch (error) {
             return next(error);
