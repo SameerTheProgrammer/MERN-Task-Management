@@ -9,6 +9,7 @@ config({
 export const env = cleanEnv(process.env, {
     PORT: port(),
     NODE_ENV: str({ default: "dev", choices: ["test", "prod", "dev"] }),
+    MONGO_LINK:str()
 });
 
 export default env;
