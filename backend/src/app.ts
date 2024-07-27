@@ -7,9 +7,10 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import hpp from "hpp";
 import morgan from "morgan";
-import csrf from "csurf";
+// import csrf from "csurf";
 import sanitize from "express-mongo-sanitize";
 import logger from "./config/logger";
+import userRouter from "./routes/user.route";
 
 // Initialize Express app
 const app = express();
@@ -21,11 +22,13 @@ app.use(cors());
 app.use(helmet());
 app.use(compression());
 app.use(cookieParser());
-app.use(csrf({ cookie: true }));
+// app.use(csrf({ cookie: true }));
 app.use(hpp());
 app.use(morgan("combined"));
 app.use(sanitize());
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+
+app.use("/api/v1/user", userRouter);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Welcome to Task Management site");
