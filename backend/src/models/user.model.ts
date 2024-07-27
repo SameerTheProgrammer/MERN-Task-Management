@@ -1,14 +1,16 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 import validator from "validator";
+import bcrypt from "bcryptjs";
 
-export interface IUser {
+// Define a TypeScript interface for the User document
+export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
-    cpassword: string;
+    comparePassword: (password: string) => Promise<boolean>;
 }
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<IUser>(
     {
         name: {
             type: String,
@@ -26,7 +28,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: [true, "Please enter your password"],
             minLength: [8, "Password should be at least 8 characters long"],
-            maxLength: [100, "Password cannot exceed 100 characters"], // Optional but recommended
+            maxLength: [100, "Password cannot exceed 100 characters"],
             select: false,
         },
     },
@@ -35,4 +37,18 @@ const userSchema = new mongoose.Schema(
     },
 );
 
-export default mongoose.model("User", userSchema);
+// Hash the user password before saving
+userSchema.pre<IUser>("save", async function (next) {
+    if (!this.isModified("password")) {
+        return next();
+    }
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+// Compare Password
+userSchema.methods.comparePassword = async function (password: string) {
+    return bcrypt.compare(password, String(this.password));
+};
+
+export default mongoose.model<IUser>("User", userSchema);

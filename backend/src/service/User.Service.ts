@@ -1,8 +1,9 @@
 import createHttpError from "http-errors";
-import UserModel, { IUser } from "../models/user.model";
+import UserModel from "../models/user.model";
+import { IUserData } from "../types/index.type";
 
 export class UserService {
-    async create({ name, email, password, cpassword }: IUser) {
+    async create({ name, email, password, cpassword }: IUserData) {
         if (cpassword !== password) {
             const error = createHttpError(
                 400,
