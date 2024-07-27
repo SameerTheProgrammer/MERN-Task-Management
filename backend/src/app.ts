@@ -11,6 +11,7 @@ import morgan from "morgan";
 import sanitize from "express-mongo-sanitize";
 import logger from "./config/logger";
 import userRouter from "./routes/user.route";
+import todoRouter from "./routes/todo.route";
 
 // Initialize Express app
 const app = express();
@@ -29,6 +30,7 @@ app.use(sanitize());
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/todo", todoRouter);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Welcome to Task Management site");

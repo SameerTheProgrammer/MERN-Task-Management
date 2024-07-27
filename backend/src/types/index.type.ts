@@ -31,3 +31,20 @@ export interface AuthMiddlewareRequest extends AuthMiddlewareProps {
         task?: string;
     };
 }
+
+export interface ITodoData {
+    id?: string;
+    title: string;
+    description?: string;
+    status: string;
+    priority: string;
+    deadline: Date | null;
+    user?: string;
+}
+
+export interface ICreateTodoRequest extends AuthMiddlewareProps {
+    body: ITodoData;
+}
+export interface IUploadTodoRequest extends AuthMiddlewareProps {
+    body: ITodoData;
+}
