@@ -29,4 +29,8 @@ export class UserService {
             throw err;
         }
     }
+
+    async findByEmailWithPassword(email: string) {
+        return await UserModel.findOne({ email }).select("password");
+    }
 }
