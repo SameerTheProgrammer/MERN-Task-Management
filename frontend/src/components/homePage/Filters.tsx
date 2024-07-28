@@ -6,12 +6,17 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
+import React from "react";
 import { BiSearch } from "react-icons/bi";
 import { CiCalendar, CiFilter } from "react-icons/ci";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { MdOutlineAutoAwesome, MdOutlineShare } from "react-icons/md";
 
-const Filters = () => {
+interface FiltersProps {
+  onOpen: () => void;
+}
+
+const Filters: React.FC<FiltersProps> = ({ onOpen }) => {
   return (
     <>
       <Flex justifyContent={"space-between"} w={"100%"}>
@@ -42,6 +47,7 @@ const Filters = () => {
             rightIcon={<IoAddCircleSharp size={25} color="white" />}
             colorScheme="teal"
             variant="solid"
+            onClick={onOpen}
           >
             Create new
           </Button>

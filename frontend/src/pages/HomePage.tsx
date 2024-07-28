@@ -1,11 +1,13 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useDisclosure } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import HCard from "./../components/homePage/Card";
 import { cardData } from "./../data/cardData";
 import Filters from "./../components/homePage/Filters";
+import CreateNewModel from "./../components/homePage/CreateNewModel";
 
 const HomePage = () => {
   const time = new Date().getHours();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Flex direction={"column"} gap={"10px"}>
@@ -23,9 +25,15 @@ const HomePage = () => {
           ))}
         </Flex>
         <Flex>
-          <Filters />
+          <Filters onOpen={onOpen} />
         </Flex>
       </Flex>
+      <CreateNewModel
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        heading="Create Todo"
+      />
     </>
   );
 };
