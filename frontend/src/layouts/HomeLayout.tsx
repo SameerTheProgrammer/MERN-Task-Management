@@ -6,7 +6,7 @@ const HomeLayout = () => {
   return (
     <Flex direction={"row"}>
       <Sidebar />
-      <Box w={"100%"} p={"10px"} bgColor={"gray.100"}>
+      <Box w={"100%"} p={"20px"} bgColor={"gray.100"} pt={"25px"}>
         <Outlet />
       </Box>
     </Flex>
