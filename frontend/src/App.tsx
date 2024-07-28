@@ -1,11 +1,10 @@
 import "./App.css";
+import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
   return (
     <>
-      <div>
-        <h1>Welcome to taskman</h1>
-      </div>
+      <Sidebar />
     </>
   );
 }
