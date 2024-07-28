@@ -3,7 +3,7 @@ import { Heading } from "@chakra-ui/react";
 import HCard from "./../components/homePage/Card";
 import { cardData } from "./../data/cardData";
 import Filters from "./../components/homePage/Filters";
-import CreateNewModel from "./../components/homePage/CreateNewModel";
+import TodoModel from "./../components/homePage/TodoModel";
 
 const HomePage = () => {
   const time = new Date().getHours();
@@ -28,7 +28,7 @@ const HomePage = () => {
           <Filters onOpen={onOpen} />
         </Flex>
       </Flex>
-      <CreateNewModel
+      <TodoModel
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
