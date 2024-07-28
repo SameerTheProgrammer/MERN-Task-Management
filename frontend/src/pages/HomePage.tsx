@@ -16,8 +16,9 @@ const HomePage = () => {
           Admin 😃
         </Heading>
         <Flex columnGap={1} mt={"10px"} justifyContent={"space-between"}>
-          {cardData.map((details) => (
+          {cardData.map((details, index) => (
             <HCard
+              key={index}
               imagePath={details.imagePath}
               title={details.title}
               description={details.description}
