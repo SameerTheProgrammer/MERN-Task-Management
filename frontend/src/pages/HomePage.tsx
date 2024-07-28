@@ -2,6 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import HCard from "./../components/homePage/Card";
 import { cardData } from "./../data/cardData";
+import Filters from "./../components/homePage/Filters";
 
 const HomePage = () => {
   const time = new Date().getHours();
@@ -20,6 +21,9 @@ const HomePage = () => {
               description={details.description}
             />
           ))}
+        </Flex>
+        <Flex>
+          <Filters />
         </Flex>
       </Flex>
     </>
