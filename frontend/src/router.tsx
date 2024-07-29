@@ -3,6 +3,7 @@ import RootLayout from "./layouts/RootLayout";
 import HomeLayout from "./layouts/HomeLayout";
 import HomePage from "./pages/HomePage";
 import UnauthorizedLayout from "./layouts/UnauthorizedLayout";
+import BoardPage from "./pages/BoardPage";
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +13,10 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <HomeLayout />,
-        children: [{ path: "", element: <HomePage /> }],
+        children: [
+          { path: "", element: <HomePage /> },
+          { path: "boards", element: <BoardPage /> },
+        ],
       },
       {
         path: "auth",

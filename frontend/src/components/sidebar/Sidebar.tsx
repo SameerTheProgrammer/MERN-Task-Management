@@ -89,11 +89,32 @@ const Sidebar: React.FC = () => {
             alignItems={navSize === "small" ? "center" : "flex-start"}
             as="nav"
           >
-            <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
-            <NavItem navSize={navSize} icon={CiViewBoard} title="Boards" />
-            <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
-            <NavItem navSize={navSize} icon={GoPeople} title="Teams" />
-            <NavItem navSize={navSize} icon={GoGraph} title="Analytics" />
+            <NavItem
+              path="/"
+              navSize={navSize}
+              icon={FiHome}
+              title="Dashboard"
+              active
+            />
+            <NavItem
+              path="/boards"
+              navSize={navSize}
+              icon={CiViewBoard}
+              title="Boards"
+            />
+            <NavItem
+              path="/"
+              navSize={navSize}
+              icon={FiSettings}
+              title="Settings"
+            />
+            <NavItem path="/" navSize={navSize} icon={GoPeople} title="Teams" />
+            <NavItem
+              path="/"
+              navSize={navSize}
+              icon={GoGraph}
+              title="Analytics"
+            />
           </Flex>
         </div>
         <Flex

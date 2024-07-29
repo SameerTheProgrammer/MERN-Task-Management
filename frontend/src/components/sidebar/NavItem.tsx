@@ -1,15 +1,23 @@
 import React from "react";
 import { Flex, Text, Icon, Link, Menu, MenuButton } from "@chakra-ui/react";
 import { IconType } from "react-icons";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 interface NavItemProps {
   icon: IconType;
   title: string;
   active?: boolean;
   navSize: "small" | "large";
+  path: string;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ icon, title, active, navSize }) => {
+const NavItem: React.FC<NavItemProps> = ({
+  icon,
+  title,
+  active,
+  navSize,
+  path,
+}) => {
   return (
     <Flex
       mt={1}
@@ -19,6 +27,8 @@ const NavItem: React.FC<NavItemProps> = ({ icon, title, active, navSize }) => {
     >
       <Menu placement="right">
         <Link
+          as={ReactRouterLink}
+          to={path}
           backgroundColor={active ? "#AEC8CA" : "transparent"}
           p={3}
           borderRadius={8}
