@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import UnauthorizedLayout from "./layouts/UnauthorizedLayout";
 import BoardPage from "./pages/BoardPage";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
           {
             path: "register",
             element: <RegisterPage />,
+          },
+          {
+            path: "login",
+            element: <LoginPage />,
           },
         ],
       },
