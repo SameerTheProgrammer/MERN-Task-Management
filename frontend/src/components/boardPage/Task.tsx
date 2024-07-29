@@ -83,7 +83,7 @@ function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
           </Heading>
           <div>
             <Text fontSize="sm" color={"gray.500"}>
-              Develop and integrate user authentication using email and password
+              {task.description}
             </Text>
           </div>
           <Flex w={"100%"} justifyContent={"space-between"}>
@@ -95,7 +95,7 @@ function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
               w={"max-content"}
               bgColor="gray.300"
             >
-              Low
+              {task.priority}
             </Badge>
             <Flex
               alignItems={"center"}
@@ -104,7 +104,7 @@ function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
               fontWeight={"bold"}
             >
               <Icon boxSize={4} as={FaRegClock} />
-              <Text fontSize={"13px"}>2024-07-31</Text>
+              <Text fontSize={"13px"}>{task.deadline.toLocaleString()}</Text>
             </Flex>
           </Flex>
           <Text color={"gray.500"} fontWeight={"bold"} fontSize={"sm"}>
