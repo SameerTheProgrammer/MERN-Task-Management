@@ -8,9 +8,6 @@ import {
   ScaleFade,
   Text,
 } from "@chakra-ui/react";
-import _ from "lodash";
-import { memo } from "react";
-// import { AutoResizeTextarea } from "./AutoResizeTextArea";
 import { TaskModel } from "../../utils/models";
 import { useTaskDragAndDrop } from "../../hooks/useTaskDragAndDrop";
 import { MdDeleteOutline } from "react-icons/md";
@@ -20,31 +17,14 @@ import { GoPencil } from "react-icons/go";
 type TaskProps = {
   index: number;
   task: TaskModel;
-  onUpdate: (id: TaskModel["id"], updatedTask: TaskModel) => void;
-  onDelete: (id: TaskModel["id"]) => void;
   onDropHover: (i: number, j: number) => void;
 };
 
-function Task({
-  index,
-  task,
-  onUpdate: handleUpdate,
-  onDropHover: handleDropHover,
-  onDelete: handleDelete,
-}: TaskProps) {
+function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
   const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
     { task, index: index },
     handleDropHover
   );
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newTitle = e.target.value;
-    handleUpdate(task.id, { ...task, title: newTitle });
-  };
-
-  const handleDeleteClick = () => {
-    handleDelete(task.id);
-  };
 
   return (
     <ScaleFade in={true} unmountOnExit>
@@ -81,7 +61,6 @@ function Task({
           _groupHover={{
             opacity: 1,
           }}
-          onClick={handleDeleteClick}
         />
         <IconButton
           position="absolute"
@@ -97,21 +76,7 @@ function Task({
           _groupHover={{
             opacity: 1,
           }}
-          onClick={handleDeleteClick}
         />
-        {/* <AutoResizeTextarea
-          value={task.title}
-          fontWeight="semibold"
-          cursor="inherit"
-          border="none"
-          p={0}
-          resize="none"
-          minH={70}
-          maxH={200}
-          focusBorderColor="none"
-          color="gray.700"
-          onChange={handleTitleChange}
-        /> */}
         <Flex direction={"column"} rowGap={"8px"}>
           <Heading color={"gray.500"} as={"h4"} size={"sm"}>
             Implement User Authentication
@@ -150,16 +115,18 @@ function Task({
     </ScaleFade>
   );
 }
-export default memo(Task, (prev, next) => {
-  if (
-    _.isEqual(prev.task, next.task) &&
-    _.isEqual(prev.index, next.index) &&
-    prev.onDelete === next.onDelete &&
-    prev.onDropHover === next.onDropHover &&
-    prev.onUpdate === next.onUpdate
-  ) {
-    return true;
-  }
+// export default memo(Task, (prev, next) => {
+//   if (
+//     _.isEqual(prev.task, next.task) &&
+//     _.isEqual(prev.index, next.index) &&
+//     prev.onDelete === next.onDelete &&
+//     prev.onDropHover === next.onDropHover &&
+//     prev.onUpdate === next.onUpdate
+//   ) {
+//     return true;
+//   }
 
-  return false;
-});
+//   return false;
+// });
+
+export default Task;

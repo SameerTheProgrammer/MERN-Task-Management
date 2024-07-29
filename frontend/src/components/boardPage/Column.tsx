@@ -13,26 +13,13 @@ import useColumnDrop from "../../hooks/useColumnDrop";
 import { IoAddCircleSharp } from "react-icons/io5";
 
 function Column({ column }: { column: ColumnType }) {
-  const {
-    tasks,
-    addEmptyTask,
-    deleteTask,
-    dropTaskFrom,
-    swapTasks,
-    updateTask,
-  } = useColumnTasks(column);
+  const { tasks, addEmptyTask, dropTaskFrom, swapTasks } =
+    useColumnTasks(column);
 
   const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
 
   const ColumnTasks = tasks.map((task, index) => (
-    <Task
-      key={task.id}
-      task={task}
-      index={index}
-      onDropHover={swapTasks}
-      onUpdate={updateTask}
-      onDelete={deleteTask}
-    />
+    <Task key={task.id} task={task} index={index} onDropHover={swapTasks} />
   ));
 
   return (
