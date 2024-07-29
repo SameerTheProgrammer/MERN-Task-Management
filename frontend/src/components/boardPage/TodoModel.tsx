@@ -265,7 +265,6 @@ const TodoModel: React.FC<TodoModelProps> = ({
                     Save
                   </Button>
                   <Button
-                    type="submit"
                     onClick={() => {
                       choseHandler();
                     }}
