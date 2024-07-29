@@ -1,14 +1,16 @@
-import { ColumnType } from './enums';
+import { ColumnType, Priority } from "./enums";
 
 export interface TaskModel {
   id: string;
   title: string;
-  column: ColumnType;
-  color: string;
+  description: string;
+  status: ColumnType;
+  priority: Priority;
+  deadline: Date;
 }
 
 export interface DragItem {
   index: number;
-  id: TaskModel['id'];
+  id: TaskModel["id"];
   from: ColumnType;
 }

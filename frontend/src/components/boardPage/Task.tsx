@@ -79,7 +79,7 @@ function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
         />
         <Flex direction={"column"} rowGap={"8px"}>
           <Heading color={"gray.500"} as={"h4"} size={"sm"}>
-            Implement User Authentication
+            {task.title}
           </Heading>
           <div>
             <Text fontSize="sm" color={"gray.500"}>

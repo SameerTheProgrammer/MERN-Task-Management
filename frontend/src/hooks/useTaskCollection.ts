@@ -1,43 +1,40 @@
-import { useLocalStorage } from 'usehooks-ts';
-
-import { v4 as uuidv4 } from 'uuid';
-import { ColumnType } from '../utils/enums';
-import { TaskModel } from '../utils/models';
+import { useLocalStorage } from "usehooks-ts";
+import { v4 as uuidv4 } from "uuid";
+import { ColumnType, Priority } from "../utils/enums";
+import { TaskModel } from "../utils/models";
 
 function useTaskCollection() {
   return useLocalStorage<{
     [key in ColumnType]: TaskModel[];
-  }>('tasks', {
-    Todo: [
+  }>("tasks", {
+    "In Progress": [
       {
         id: uuidv4(),
-        column: ColumnType.TO_DO,
-        title: 'Task 1',
-        color: 'blue.300',
+        title: "Task 2",
+        status: ColumnType.IN_PROGRESS,
+        description: "Task 2",
+        priority: Priority.HIGH,
+        deadline: new Date(),
       },
     ],
-    'In Progress': [
+    "Under Review": [
       {
         id: uuidv4(),
-        column: ColumnType.IN_PROGRESS,
-        title: 'Task 2',
-        color: 'yellow.300',
-      },
-    ],
-    Blocked: [
-      {
-        id: uuidv4(),
-        column: ColumnType.BLOCKED,
-        title: 'Task 3',
-        color: 'red.300',
+        title: "Task 2",
+        status: ColumnType.UNDER_REVIREW,
+        description: "Task 2",
+        priority: Priority.HIGH,
+        deadline: new Date(),
       },
     ],
     Completed: [
       {
         id: uuidv4(),
-        column: ColumnType.COMPLETED,
-        title: 'Task 4',
-        color: 'green.300',
+        title: "Task 2",
+        status: ColumnType.COMPLETED,
+        description: "Task 2",
+        priority: Priority.HIGH,
+        deadline: new Date(),
       },
     ],
   });

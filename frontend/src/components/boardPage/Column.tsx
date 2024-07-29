@@ -1,27 +1,18 @@
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Stack, Text } from "@chakra-ui/react";
 import Task from "./Task";
 import { ColumnType } from "../../utils/enums";
 import useColumnTasks from "../../hooks/useColumnTasks";
 import useColumnDrop from "../../hooks/useColumnDrop";
 import { IoAddCircleSharp } from "react-icons/io5";
+import { useEffect } from "react";
 
 function Column({ column }: { column: ColumnType }) {
-  const { tasks, addEmptyTask, dropTaskFrom, swapTasks } =
-    useColumnTasks(column);
+  const { tasks, dropTaskFrom, swapTasks } = useColumnTasks(column);
+  useEffect(() => {
+    console.log(`Tasks for column ${column}:`, tasks);
+  }, [tasks, column]);
 
   const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
-
-  const ColumnTasks = tasks.map((task, index) => (
-    <Task key={task.id} task={task} index={index} onDropHover={swapTasks} />
-  ));
-
   return (
     <Box px={1} h={"100%"}>
       <Container
@@ -42,11 +33,10 @@ function Column({ column }: { column: ColumnType }) {
           colorScheme="teal"
           variant="solid"
           w={"fit-content"}
-          color={useColorModeValue("gray.500", "gray.400")}
-          bgColor={useColorModeValue("gray.100", "gray.700")}
-          _hover={{ bgColor: useColorModeValue("gray.200", "gray.600") }}
+          color={"gray.500"}
+          bgColor={"gray.100"}
+          _hover={{ bgColor: "gray.400" }}
           px={3}
-          onClick={addEmptyTask}
           aria-label="add-task"
         >
           Add
@@ -56,7 +46,6 @@ function Column({ column }: { column: ColumnType }) {
       <Stack
         ref={dropRef}
         direction={{ base: "row", md: "column" }}
-        // maxHeight={"95%"}
         h={"70vh"}
         p={1}
         mt={2}
@@ -70,7 +59,18 @@ function Column({ column }: { column: ColumnType }) {
           },
         }}
       >
-        {ColumnTasks}
+        {tasks ? (
+          tasks.map((task, index) => (
+            <Task
+              key={task.id}
+              task={task}
+              index={index}
+              onDropHover={swapTasks}
+            />
+          ))
+        ) : (
+          <div>No task</div>
+        )}
       </Stack>
     </Box>
   );

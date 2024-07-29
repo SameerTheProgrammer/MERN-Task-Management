@@ -18,10 +18,9 @@ const BoardPage = () => {
         <Flex borderRadius={5} p={5} bgColor={"white"} w={"100%"} h={"80vh"}>
           {/* <DarkModeIconButton position="absolute" top={0} right={2} /> */}
           <DndProvider backend={HTML5Backend}>
-            <SimpleGrid w={"100%"} columns={{ md: 4 }}>
-              <Column column={ColumnType.TO_DO} />
+            <SimpleGrid w={"100%"} columns={{ md: 3 }}>
               <Column column={ColumnType.IN_PROGRESS} />
-              <Column column={ColumnType.BLOCKED} />
+              <Column column={ColumnType.UNDER_REVIREW} />
               <Column column={ColumnType.COMPLETED} />
             </SimpleGrid>
           </DndProvider>

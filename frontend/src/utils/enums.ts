@@ -1,10 +1,15 @@
 export enum ColumnType {
-  TO_DO = 'Todo',
-  IN_PROGRESS = 'In Progress',
-  BLOCKED = 'Blocked',
-  COMPLETED = 'Completed',
+  IN_PROGRESS = "In Progress",
+  UNDER_REVIREW = "Under Review",
+  COMPLETED = "Completed",
+}
+
+export enum Priority {
+  HIGH = "High",
+  NORMAL = "Normal",
+  LOW = "Low",
 }
 
 export enum ItemType {
-  TASK = 'Task',
+  TASK = "Task",
 }
