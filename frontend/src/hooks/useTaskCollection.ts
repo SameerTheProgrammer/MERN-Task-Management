@@ -7,11 +7,19 @@ function useTaskCollection() {
   return useLocalStorage<{
     [key in ColumnType]: TaskModel[];
   }>("tasks", {
-    "In Progress": [
+    Progress: [
+      {
+        id: uuidv4(),
+        title: "Task 1",
+        status: ColumnType.PROGRESS,
+        description: "Task 1",
+        priority: Priority.LOW,
+        deadline: new Date(),
+      },
       {
         id: uuidv4(),
         title: "Task 2",
-        status: ColumnType.IN_PROGRESS,
+        status: ColumnType.PROGRESS,
         description: "Task 2",
         priority: Priority.HIGH,
         deadline: new Date(),

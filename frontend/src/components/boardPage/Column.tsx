@@ -1,12 +1,25 @@
 import { Box, Button, Container, Stack, Text } from "@chakra-ui/react";
 import Task from "./Task";
-import { ColumnType } from "../../utils/enums";
+import { ColumnType, HeadingType } from "../../utils/enums";
 import useColumnTasks from "../../hooks/useColumnTasks";
 import useColumnDrop from "../../hooks/useColumnDrop";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { useEffect } from "react";
+import { InitialValues } from "../../utils/types";
 
-function Column({ column }: { column: ColumnType }) {
+interface ColumnProps {
+  onOpen: () => void;
+  column: ColumnType;
+  setHeadingType: React.Dispatch<React.SetStateAction<HeadingType | undefined>>;
+  setInitialValues: React.Dispatch<React.SetStateAction<InitialValues>>;
+}
+
+const Column: React.FC<ColumnProps> = ({
+  column,
+  setHeadingType,
+  onOpen,
+  setInitialValues,
+}) => {
   const { tasks, dropTaskFrom, swapTasks } = useColumnTasks(column);
   useEffect(() => {
     console.log(`Tasks for column ${column}:`, tasks);
@@ -38,6 +51,14 @@ function Column({ column }: { column: ColumnType }) {
           _hover={{ bgColor: "gray.400" }}
           px={3}
           aria-label="add-task"
+          onClick={() => {
+            setHeadingType(HeadingType.ADD);
+            setInitialValues((prev) => ({
+              ...prev,
+              status: column,
+            }));
+            onOpen();
+          }}
         >
           Add
         </Button>
@@ -66,6 +87,9 @@ function Column({ column }: { column: ColumnType }) {
               task={task}
               index={index}
               onDropHover={swapTasks}
+              onOpen={onOpen}
+              setHeadingType={setHeadingType}
+              setInitialValues={setInitialValues}
             />
           ))
         ) : (
@@ -74,6 +98,6 @@ function Column({ column }: { column: ColumnType }) {
       </Stack>
     </Box>
   );
-}
+};
 
 export default Column;

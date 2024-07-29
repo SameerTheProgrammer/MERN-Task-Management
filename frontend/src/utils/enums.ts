@@ -1,5 +1,5 @@
 export enum ColumnType {
-  IN_PROGRESS = "In Progress",
+  PROGRESS = "Progress",
   UNDER_REVIREW = "Under Review",
   COMPLETED = "Completed",
 }
@@ -12,4 +12,9 @@ export enum Priority {
 
 export enum ItemType {
   TASK = "Task",
+}
+
+export enum HeadingType {
+  ADD = "Add Todo",
+  EDIT = "Edit Todo",
 }

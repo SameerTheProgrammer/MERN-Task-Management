@@ -4,11 +4,21 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Column from "../components/boardPage/Column";
 // import DarkModeIconButton from "../components/homePage/board/DarkModeIconButton";
-import { ColumnType } from "../utils/enums";
+import { ColumnType, HeadingType } from "../utils/enums";
 import TodoModel from "../components/boardPage/TodoModel";
+import { useState } from "react";
+import { InitialValues } from "../utils/types";
 
 const BoardPage = () => {
+  const [headingType, setHeadingType] = useState<HeadingType>();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [initialValues, setInitialValues] = useState<InitialValues>({
+    title: "",
+    status: "",
+    priority: "",
+    deadline: null,
+    description: "",
+  });
   return (
     <>
       <Flex direction={"column"} gap={"15px"}>
@@ -19,18 +29,35 @@ const BoardPage = () => {
           {/* <DarkModeIconButton position="absolute" top={0} right={2} /> */}
           <DndProvider backend={HTML5Backend}>
             <SimpleGrid w={"100%"} columns={{ md: 3 }}>
-              <Column column={ColumnType.IN_PROGRESS} />
-              <Column column={ColumnType.UNDER_REVIREW} />
-              <Column column={ColumnType.COMPLETED} />
+              <Column
+                setInitialValues={setInitialValues}
+                onOpen={onOpen}
+                setHeadingType={setHeadingType}
+                column={ColumnType.PROGRESS}
+              />
+              <Column
+                setInitialValues={setInitialValues}
+                onOpen={onOpen}
+                setHeadingType={setHeadingType}
+                column={ColumnType.UNDER_REVIREW}
+              />
+              <Column
+                setInitialValues={setInitialValues}
+                onOpen={onOpen}
+                setHeadingType={setHeadingType}
+                column={ColumnType.COMPLETED}
+              />
             </SimpleGrid>
           </DndProvider>
         </Flex>
       </Flex>
       <TodoModel
+        setInitialValues={setInitialValues}
+        initialValues={initialValues}
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
-        heading="Create Todo"
+        heading={headingType!}
       />
     </>
   );

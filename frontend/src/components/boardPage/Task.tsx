@@ -13,14 +13,26 @@ import { useTaskDragAndDrop } from "../../hooks/useTaskDragAndDrop";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa6";
 import { GoPencil } from "react-icons/go";
+import { HeadingType } from "../../utils/enums";
+import { InitialValues } from "../../utils/types";
 
 type TaskProps = {
   index: number;
   task: TaskModel;
   onDropHover: (i: number, j: number) => void;
+  onOpen: () => void;
+  setHeadingType: React.Dispatch<React.SetStateAction<HeadingType | undefined>>;
+  setInitialValues: React.Dispatch<React.SetStateAction<InitialValues>>;
 };
 
-function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
+function Task({
+  index,
+  task,
+  onDropHover: handleDropHover,
+  onOpen,
+  setHeadingType,
+  setInitialValues,
+}: TaskProps) {
   const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
     { task, index: index },
     handleDropHover
@@ -64,10 +76,10 @@ function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
         />
         <IconButton
           position="absolute"
-          top={5}
+          top={7}
           right={0}
           zIndex={100}
-          aria-label="delete-task"
+          aria-label="edit-task"
           size="lg"
           colorScheme="solid"
           color={"gray.700"}
@@ -75,6 +87,17 @@ function Task({ index, task, onDropHover: handleDropHover }: TaskProps) {
           opacity={0}
           _groupHover={{
             opacity: 1,
+          }}
+          onClick={() => {
+            setInitialValues({
+              title: task.title,
+              status: task.status,
+              priority: task.priority,
+              deadline: task.deadline,
+              description: task.description,
+            });
+            setHeadingType(HeadingType.EDIT);
+            onOpen();
           }}
         />
         <Flex direction={"column"} rowGap={"8px"}>

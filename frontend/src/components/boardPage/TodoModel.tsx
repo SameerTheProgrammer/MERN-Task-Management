@@ -22,39 +22,41 @@ import { FiEdit2, FiLoader } from "react-icons/fi";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { Formik, Field, Form, ErrorMessage, FieldProps } from "formik";
 import { z } from "zod";
+import { InitialValues } from "../../utils/types";
+import TodoModelSchema from "../../validations/Todo";
 
 interface TodoModelProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
   heading: string;
+  initialValues: InitialValues;
+  setInitialValues: React.Dispatch<React.SetStateAction<InitialValues>>;
 }
 
-const TodoModelSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  status: z.string().min(1, { message: "Status is required" }),
-  priority: z.string().min(1, { message: "Priority is required" }),
-  deadline: z.string().optional(),
-  description: z.string().optional(),
-});
-
-type TodoModelSchema = z.infer<typeof TodoModelSchema>;
-
-const TodoModel: React.FC<TodoModelProps> = ({ isOpen, onClose, heading }) => {
-  const initialValues = {
-    title: "",
-    status: "",
-    priority: "",
-    deadline: "",
-    description: "",
+const TodoModel: React.FC<TodoModelProps> = ({
+  isOpen,
+  onClose,
+  heading,
+  initialValues,
+  setInitialValues,
+}) => {
+  const choseHandler = () => {
+    onClose();
+    setInitialValues({
+      title: "",
+      status: "",
+      priority: "",
+      deadline: null,
+      description: "",
+    });
   };
-
   return (
     <Modal
       closeOnOverlayClick={false}
       blockScrollOnMount={false}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={choseHandler}
       motionPreset="slideInBottom"
     >
       <ModalOverlay />
@@ -84,7 +86,7 @@ const TodoModel: React.FC<TodoModelProps> = ({ isOpen, onClose, heading }) => {
             onSubmit={(_values, { setSubmitting }) => {
               setSubmitting(false);
               console.log(_values);
-              onClose();
+              choseHandler();
             }}
           >
             {({ isSubmitting }) => (
@@ -265,7 +267,7 @@ const TodoModel: React.FC<TodoModelProps> = ({ isOpen, onClose, heading }) => {
                   <Button
                     type="submit"
                     onClick={() => {
-                      onClose();
+                      choseHandler();
                     }}
                   >
                     Cancel
