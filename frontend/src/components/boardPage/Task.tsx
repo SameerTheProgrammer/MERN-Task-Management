@@ -15,6 +15,7 @@ import { FaRegClock } from "react-icons/fa6";
 import { GoPencil } from "react-icons/go";
 import { HeadingType } from "../../utils/enums";
 import { InitialValues } from "../../utils/types";
+import moment from "moment";
 
 type TaskProps = {
   index: number;
@@ -127,7 +128,11 @@ function Task({
               fontWeight={"bold"}
             >
               <Icon boxSize={4} as={FaRegClock} />
-              <Text fontSize={"13px"}>{task.deadline.toLocaleString()}</Text>
+              <Text fontSize={"13px"}>
+                {task.deadline
+                  ? moment(task.deadline).format("YYYY-MM-DD hh:mm:ss A")
+                  : ""}
+              </Text>
             </Flex>
           </Flex>
           <Text color={"gray.500"} fontWeight={"bold"} fontSize={"sm"}>

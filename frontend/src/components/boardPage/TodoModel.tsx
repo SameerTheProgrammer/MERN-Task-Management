@@ -24,6 +24,7 @@ import { Formik, Field, Form, ErrorMessage, FieldProps } from "formik";
 import { z } from "zod";
 import { InitialValues } from "../../utils/types";
 import TodoModelSchema from "../../validations/Todo";
+import { DateTime } from "luxon";
 
 interface TodoModelProps {
   isOpen: boolean;
@@ -41,6 +42,7 @@ const TodoModel: React.FC<TodoModelProps> = ({
   initialValues,
   setInitialValues,
 }) => {
+  console.log("initialValues", initialValues);
   const choseHandler = () => {
     onClose();
     setInitialValues({
@@ -208,14 +210,25 @@ const TodoModel: React.FC<TodoModelProps> = ({
                         alignContent="center"
                       >
                         <Field name="deadline">
-                          {({ field }: FieldProps<string>) => (
-                            <Input
-                              {...field}
-                              placeholder="Select Date and Time"
-                              size="md"
-                              type="datetime-local"
-                            />
-                          )}
+                          {({ field }: FieldProps<string>) => {
+                            let formattedDeadline = "";
+                            if (field.value) {
+                              const date = DateTime.fromISO(field.value, {
+                                zone: "utc",
+                              });
+                              formattedDeadline =
+                                date.toFormat("yyyy-MM-dd'T'HH:mm");
+                            }
+                            return (
+                              <Input
+                                {...field}
+                                value={formattedDeadline}
+                                placeholder="Select Date and Time"
+                                size="md"
+                                type="datetime-local"
+                              />
+                            );
+                          }}
                         </Field>
                         <ErrorMessage name="deadline" component="div" />
                       </GridItem>
@@ -241,14 +254,16 @@ const TodoModel: React.FC<TodoModelProps> = ({
                         alignContent="center"
                       >
                         <Field name="description">
-                          {({ field }: FieldProps<string>) => (
-                            <Textarea
-                              {...field}
-                              maxBlockSize={150}
-                              placeholder="Add Description"
-                              size="sm"
-                            />
-                          )}
+                          {({ field }: FieldProps<string>) => {
+                            return (
+                              <Textarea
+                                {...field}
+                                maxBlockSize={150}
+                                placeholder="Add Description"
+                                size="sm"
+                              />
+                            );
+                          }}
                         </Field>
                         <ErrorMessage name="description" component="div" />
                       </GridItem>
