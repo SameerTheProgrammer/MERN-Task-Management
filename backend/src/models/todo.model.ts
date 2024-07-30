@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import mongoose, { Document } from "mongoose";
 
 export interface ITodo extends Document {
@@ -44,6 +45,20 @@ const todoSchema = new mongoose.Schema<ITodo>(
     },
     {
         timestamps: true,
+        toJSON: {
+            transform: (doc, ret) => {
+                ret.id = ret._id;
+                // Optionally, convert _id to a string if it's an ObjectId
+                // ret.id = ret._id.toString();
+            },
+        },
+        toObject: {
+            transform: (doc, ret) => {
+                ret.id = ret._id;
+                // Optionally, convert _id to a string if it's an ObjectId
+                // ret.id = ret._id.toString();
+            },
+        },
     },
 );
 

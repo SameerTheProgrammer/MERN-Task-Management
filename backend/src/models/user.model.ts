@@ -34,6 +34,20 @@ const userSchema = new mongoose.Schema<IUser>(
     },
     {
         timestamps: true,
+        toJSON: {
+            transform: (doc, ret) => {
+                ret.id = ret._id;
+                // Optionally, convert _id to a string if it's an ObjectId
+                // ret.id = ret._id.toString();
+            },
+        },
+        toObject: {
+            transform: (doc, ret) => {
+                ret.id = ret._id;
+                // Optionally, convert _id to a string if it's an ObjectId
+                // ret.id = ret._id.toString();
+            },
+        },
     },
 );
 
