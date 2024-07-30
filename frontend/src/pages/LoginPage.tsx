@@ -8,6 +8,7 @@ import {
   InputRightElement,
   Text,
   Link as ChakraLink,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik, Form, Field, FieldProps, ErrorMessage } from "formik";
 import { z } from "zod";
@@ -16,9 +17,52 @@ import React from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { useLoginUserMutation } from "../store/userApi";
+import { APIError, UserLoginData } from "../utils/types";
+import { setUser } from "../store/userSlice";
+import { useAppDispatch } from "../store/hooks";
 
 const LoginPage = () => {
   const [show, setShow] = React.useState(false);
+  const [loginUser] = useLoginUserMutation();
+  const toast = useToast();
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = async (
+    values: UserLoginData,
+    setSubmitting: (isSubmitting: boolean) => void
+  ) => {
+    try {
+      setSubmitting(true);
+      const response = await loginUser(values).unwrap();
+      toast({
+        title: `User Logged in successfully`,
+        status: "success",
+        isClosable: true,
+        position: "top",
+      });
+      if (response.user) {
+        const { _id: id, name, email } = response.user;
+        dispatch(setUser({ id, name, email }));
+      }
+    } catch (error) {
+      if ((error as APIError).data) {
+        const apiError = error as APIError;
+        toast({
+          title: "Error during Log in",
+          description:
+            apiError.data.error[0].msg || "An unexpected error occurred.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Box
       w="100%"
@@ -69,8 +113,8 @@ const LoginPage = () => {
               }
             }}
             onSubmit={(values, { setSubmitting }) => {
-              console.log(values);
               setSubmitting(false);
+              handleSubmit(values, setSubmitting);
             }}
           >
             {({ isSubmitting }) => (

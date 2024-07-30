@@ -19,6 +19,8 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { APIError, UserRegisterData } from "../utils/types";
 import { useRegisterUserMutation } from "../store/userApi";
+import { setUser } from "../store/userSlice";
+import { useAppDispatch } from "../store/hooks";
 
 const RegisterPage = () => {
   const [show, setShow] = React.useState(false);
@@ -26,6 +28,7 @@ const RegisterPage = () => {
 
   const [registerUser] = useRegisterUserMutation();
   const toast = useToast();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (
     values: UserRegisterData,
@@ -33,13 +36,17 @@ const RegisterPage = () => {
   ) => {
     try {
       setSubmitting(true);
-      await registerUser(values).unwrap();
+      const response = await registerUser(values).unwrap();
       toast({
         title: `User registered successfully`,
         status: "success",
         isClosable: true,
         position: "top",
       });
+      if (response.user) {
+        const { _id: id, name, email } = response.user;
+        dispatch(setUser({ id, name, email }));
+      }
     } catch (error) {
       if ((error as APIError).data) {
         const apiError = error as APIError;
