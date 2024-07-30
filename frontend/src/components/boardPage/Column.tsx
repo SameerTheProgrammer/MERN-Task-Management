@@ -1,10 +1,10 @@
 import { Box, Button, Container, Stack, Text } from "@chakra-ui/react";
-import Task from "./Task2";
+import Task from "./Task";
 import { ColumnType, HeadingType } from "../../utils/enums";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { InitialValues } from "../../utils/types";
 import { useAppSelector } from "../../store/hooks";
-import useColumnDrop from "../../hooks2/useColumnDrop";
+import useColumnDrop from "../../hooks/useColumnDrop";
 
 interface ColumnProps {
   onOpen: () => void;
