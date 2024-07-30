@@ -4,7 +4,7 @@ export interface InitialValues {
   title: string;
   status: string;
   priority: string;
-  deadline: Date | null;
+  deadline: string;
   description: string;
 }
 
@@ -26,7 +26,7 @@ export interface TaskData {
   description: string;
   status: ColumnType;
   priority: Priority;
-  deadline: Date;
+  deadline: string;
 }
 
 export interface APIError {

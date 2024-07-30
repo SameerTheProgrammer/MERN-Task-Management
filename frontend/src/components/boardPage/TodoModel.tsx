@@ -48,7 +48,7 @@ const TodoModel: React.FC<TodoModelProps> = ({
       title: "",
       status: "",
       priority: "",
-      deadline: null,
+      deadline: "",
       description: "",
     });
   };
@@ -225,6 +225,7 @@ const TodoModel: React.FC<TodoModelProps> = ({
                                 placeholder="Select Date and Time"
                                 size="md"
                                 type="datetime-local"
+                                defaultValue={""}
                               />
                             );
                           }}

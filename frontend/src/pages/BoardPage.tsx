@@ -1,9 +1,9 @@
+// BoardPage.tsx
 import { Flex, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import Filters from "../components/boardPage/Filters";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Column from "../components/boardPage/Column";
-// import DarkModeIconButton from "../components/homePage/board/DarkModeIconButton";
+import Column from "../components/boardPage/Column2";
 import { ColumnType, HeadingType } from "../utils/enums";
 import TodoModel from "../components/boardPage/TodoModel";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ const BoardPage = () => {
     title: "",
     status: "",
     priority: "",
-    deadline: null,
+    deadline: "",
     description: "",
   });
 
@@ -43,7 +43,6 @@ const BoardPage = () => {
           <Filters onOpen={onOpen} />
         </Flex>
         <Flex borderRadius={5} p={5} bgColor={"white"} w={"100%"} h={"80vh"}>
-          {/* <DarkModeIconButton position="absolute" top={0} right={2} /> */}
           <DndProvider backend={HTML5Backend}>
             <SimpleGrid w={"100%"} columns={{ md: 3 }}>
               <Column
@@ -63,7 +62,6 @@ const BoardPage = () => {
                 onOpen={onOpen}
                 setHeadingType={setHeadingType}
                 column={ColumnType.COMPLETED}
-                // tasks={tasks.Completed}
               />
             </SimpleGrid>
           </DndProvider>

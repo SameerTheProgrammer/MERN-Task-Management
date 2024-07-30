@@ -1,4 +1,4 @@
-// userSlice.ts
+// tasksSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { TaskData } from "../utils/types";
@@ -44,30 +44,49 @@ const taskSlice = createSlice({
       });
     },
 
-    updateTaskStatus(
+    moveTask(
       state,
-      action: PayloadAction<{ id: string; newStatus: ColumnType }>
+      action: PayloadAction<{ from: ColumnType; to: ColumnType; id: string }>
     ) {
-      const { id, newStatus } = action.payload;
-      let taskToUpdate: TaskData | undefined;
+      const { from, to, id } = action.payload;
+      if (from === to) {
+        return;
+      }
+      let taskToMove: TaskData | undefined;
+      const fromList = state[from];
+      const toList = state[to];
 
-      Object.values(state).forEach((taskList) => {
-        const index = taskList.findIndex((task) => task.id === id);
-        if (index !== -1) {
-          taskToUpdate = taskList[index];
-          taskList.splice(index, 1);
-        }
-      });
+      const index = fromList.findIndex((task) => task.id === id);
+      if (index !== -1) {
+        taskToMove = fromList[index];
+        fromList.splice(index, 1);
+      }
+      // if (index !== -1) {
+      //   taskToMove = fromList.splice(index, 1)[0];
+      // }
 
-      if (taskToUpdate) {
-        taskToUpdate.status = newStatus;
-        state[newStatus].push(taskToUpdate);
+      if (taskToMove) {
+        taskToMove.status = to;
+        toList.push(taskToMove);
       }
     },
 
-    deleteTask(state, action: PayloadAction<{ id: string }>) {
-      const { id } = action.payload;
+    reorderTasks(
+      state,
+      action: PayloadAction<{
+        column: ColumnType;
+        fromIndex: number;
+        toIndex: number;
+      }>
+    ) {
+      const { column, fromIndex, toIndex } = action.payload;
+      const tasks = state[column];
+      const [movedTask] = tasks.splice(fromIndex, 1);
+      tasks.splice(toIndex, 0, movedTask);
+    },
 
+    deleteTask(state, action: PayloadAction<string>) {
+      const id = action.payload;
       Object.values(state).forEach((taskList) => {
         const index = taskList.findIndex((task) => task.id === id);
         if (index !== -1) {
@@ -82,7 +101,8 @@ export const {
   setAllTasks,
   addTask,
   updateTaskInfo,
-  updateTaskStatus,
+  moveTask,
+  reorderTasks,
   deleteTask,
 } = taskSlice.actions;
 
