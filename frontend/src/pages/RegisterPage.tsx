@@ -8,6 +8,7 @@ import {
   InputRightElement,
   Text,
   Link as ChakraLink,
+  useToast,
 } from "@chakra-ui/react";
 import { Formik, Field, Form, FieldProps, ErrorMessage } from "formik";
 import { z } from "zod";
@@ -16,10 +17,47 @@ import React from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { APIError, UserRegisterData } from "../utils/types";
+import { useRegisterUserMutation } from "../store/userApi";
 
 const RegisterPage = () => {
   const [show, setShow] = React.useState(false);
   const [cShow, setCShow] = React.useState(false);
+
+  const [registerUser] = useRegisterUserMutation();
+  const toast = useToast();
+
+  const handleSubmit = async (
+    values: UserRegisterData,
+    setSubmitting: (isSubmitting: boolean) => void
+  ) => {
+    try {
+      setSubmitting(true);
+      await registerUser(values).unwrap();
+      toast({
+        title: `User registered successfully`,
+        status: "success",
+        isClosable: true,
+        position: "top",
+      });
+    } catch (error) {
+      if ((error as APIError).data) {
+        const apiError = error as APIError;
+        toast({
+          title: "Error during registration",
+          description:
+            apiError.data.error[0].msg || "An unexpected error occurred.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Box
       w="100%"
@@ -74,8 +112,7 @@ const RegisterPage = () => {
               }
             }}
             onSubmit={(values, { setSubmitting }) => {
-              console.log(values);
-              setSubmitting(false);
+              handleSubmit(values, setSubmitting);
             }}
           >
             {({ isSubmitting }) => (
