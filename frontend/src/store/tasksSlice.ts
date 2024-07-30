@@ -112,7 +112,7 @@ const taskSlice = createSlice({
       tasks.splice(toIndex, 0, movedTask);
     },
 
-    deleteTask(state, action: PayloadAction<string>) {
+    removeTask(state, action: PayloadAction<string>) {
       const id = action.payload;
       Object.values(state).forEach((taskList) => {
         const index = taskList.findIndex((task) => task.id === id);
@@ -130,7 +130,7 @@ export const {
   updateTaskInfo,
   moveTask,
   reorderTasks,
-  deleteTask,
+  removeTask,
   revertMoveTask,
 } = taskSlice.actions;
 

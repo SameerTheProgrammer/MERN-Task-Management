@@ -32,10 +32,7 @@ export class TodoController {
                 deadline,
             });
 
-            res.status(201).json({
-                message: "Todo is created",
-                id: newTodo._id,
-            });
+            res.status(201).json({ task: newTodo });
         } catch (error) {
             return next(error);
         }
@@ -64,10 +61,7 @@ export class TodoController {
                 deadline,
             });
 
-            res.status(201).json({
-                message: "Todo is updated",
-                id: updatedTodo._id,
-            });
+            res.status(201).json({ task: updatedTodo });
         } catch (error) {
             return next(error);
         }
@@ -129,6 +123,7 @@ export class TodoController {
             return next(error);
         }
     }
+
     async getSelfOneTodo(
         req: AuthMiddlewareRequest,
         res: Response,

@@ -16,15 +16,23 @@ import {
   Select,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { FiEdit2, FiLoader } from "react-icons/fi";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { Formik, Field, Form, ErrorMessage, FieldProps } from "formik";
 import { z } from "zod";
-import { InitialValues } from "../../utils/types";
+import { APIError, InitialValues, TaskData } from "../../utils/types";
 import TodoModelSchema from "../../validations/Todo";
 import { DateTime } from "luxon";
+import { useAppDispatch } from "../../store/hooks";
+import {
+  useCreateTaskMutation,
+  useUpdateTaskMutation,
+} from "../../store/tasksApi";
+import { HeadingType } from "../../utils/enums";
+import { addTask } from "../../store/tasksSlice";
 
 interface TodoModelProps {
   isOpen: boolean;
@@ -42,6 +50,43 @@ const TodoModel: React.FC<TodoModelProps> = ({
   initialValues,
   setInitialValues,
 }) => {
+  const dispatch = useAppDispatch();
+  const [loginUser] = useCreateTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
+  const toast = useToast();
+
+  const handleSubmit = async (
+    values: TaskData,
+    setSubmitting: (isSubmitting: boolean) => void
+  ) => {
+    try {
+      setSubmitting(true);
+      let response;
+      if (heading == HeadingType.EDIT) {
+        response = updateTask(values).unwrap();
+      }
+      response = await loginUser(values).unwrap();
+      if (response.task) {
+        dispatch(addTask(response.task));
+      }
+    } catch (error) {
+      if ((error as APIError).data) {
+        const apiError = error as APIError;
+        toast({
+          title: `Error during ${heading}`,
+          description:
+            apiError.data.error[0].msg || "An unexpected error occurred.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const choseHandler = () => {
     onClose();
     setInitialValues({
@@ -85,8 +130,7 @@ const TodoModel: React.FC<TodoModelProps> = ({
               }
             }}
             onSubmit={(_values, { setSubmitting }) => {
-              setSubmitting(false);
-              console.log(_values);
+              handleSubmit(_values, setSubmitting);
               choseHandler();
             }}
           >

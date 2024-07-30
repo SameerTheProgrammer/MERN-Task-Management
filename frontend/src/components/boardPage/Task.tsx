@@ -7,14 +7,18 @@ import {
   IconButton,
   ScaleFade,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa6";
 import { GoPencil } from "react-icons/go";
 import { HeadingType } from "../../utils/enums";
-import { InitialValues, TaskData } from "../../utils/types";
+import { APIError, InitialValues, TaskData } from "../../utils/types";
 import moment from "moment";
 import { useDrag } from "react-dnd";
+import { removeTask } from "../../store/tasksSlice";
+import { useDeleteTaskMutation } from "../../store/tasksApi";
+import { useAppDispatch } from "../../store/hooks";
 
 type TaskProps = {
   index: number;
@@ -25,6 +29,30 @@ type TaskProps = {
 };
 
 function Task({ task, onOpen, setHeadingType, setInitialValues }: TaskProps) {
+  const [deleteTask] = useDeleteTaskMutation();
+  const dispatch = useAppDispatch();
+  const toast = useToast();
+
+  const handleDelete = async () => {
+    try {
+      await deleteTask(task.id!).unwrap();
+      dispatch(removeTask(task.id!));
+    } catch (error) {
+      if ((error as APIError).data) {
+        const apiError = error as APIError;
+        toast({
+          title: `Deleting a task failed`,
+          description:
+            apiError.data.error[0].msg || "An unexpected error occurred.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    }
+  };
+
   const [{ isDragging }, dragRef] = useDrag({
     type: "TASK",
     item: { ...task },
@@ -67,6 +95,7 @@ function Task({ task, onOpen, setHeadingType, setInitialValues }: TaskProps) {
           _groupHover={{
             opacity: 1,
           }}
+          onClick={handleDelete}
         />
         <IconButton
           position="absolute"
