@@ -77,6 +77,27 @@ const taskSlice = createSlice({
       });
     },
 
+    revertMoveTask(
+      state,
+      action: PayloadAction<{ from: ColumnType; to: ColumnType; id: string }>
+    ) {
+      const { from, to, id } = action.payload;
+      let taskToRevert: TaskData | undefined;
+      const fromList = state[to];
+      const toList = state[from];
+
+      const index = fromList.findIndex((task) => task.id === id);
+      if (index !== -1) {
+        taskToRevert = fromList[index];
+        fromList.splice(index, 1);
+      }
+
+      if (taskToRevert) {
+        taskToRevert.status = from;
+        toList.push(taskToRevert);
+      }
+    },
+
     reorderTasks(
       state,
       action: PayloadAction<{
@@ -110,6 +131,7 @@ export const {
   moveTask,
   reorderTasks,
   deleteTask,
+  revertMoveTask,
 } = taskSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;

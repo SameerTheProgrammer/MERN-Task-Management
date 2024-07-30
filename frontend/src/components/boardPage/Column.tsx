@@ -82,7 +82,7 @@ const Column: React.FC<ColumnProps> = ({
         {tasks ? (
           tasks.map((task, index) => (
             <Task
-              key={task.id || index}
+              key={task.id}
               task={task}
               index={index}
               onOpen={onOpen}

@@ -27,9 +27,8 @@ type TaskProps = {
 function Task({ task, onOpen, setHeadingType, setInitialValues }: TaskProps) {
   const [{ isDragging }, dragRef] = useDrag({
     type: "TASK",
-    item: { id: task.id, from: task.status },
+    item: { ...task },
     collect: (monitor) => {
-      console.log({ id: task.id, from: task.status });
       return {
         isDragging: monitor.isDragging(),
       };
