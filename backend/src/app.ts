@@ -12,6 +12,7 @@ import sanitize from "express-mongo-sanitize";
 import logger from "./config/logger";
 import userRouter from "./routes/user.route";
 import todoRouter from "./routes/todo.route";
+import { env } from "./config/dotenv";
 
 // Initialize Express app
 const app = express();
@@ -19,7 +20,12 @@ const app = express();
 app.use(express.json());
 
 // All security related middlewares
-app.use(cors());
+const corsOptions = {
+    origin: env.FRONTEND_URL,
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(compression());
 app.use(cookieParser());
