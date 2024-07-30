@@ -31,7 +31,11 @@ export class UserService {
     }
 
     async findByEmailWithPassword(email: string) {
-        return await UserModel.findOne({ email }).select("password");
+        return await UserModel.findOne({ email }, [
+            "name",
+            "email",
+            "password",
+        ]);
     }
 
     async findByEmail(email: string) {

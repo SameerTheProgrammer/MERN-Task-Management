@@ -39,7 +39,13 @@ export class UserController {
             this.logger.info("User has been registered", { id: newUser._id });
 
             setCookie(res, String(newUser._id));
-            res.status(201).json({ id: newUser._id });
+            res.status(201).json({
+                user: {
+                    _id: newUser._id,
+                    name: newUser.name,
+                    email: newUser.email,
+                },
+            });
         } catch (error) {
             return next(error);
         }
@@ -73,7 +79,13 @@ export class UserController {
             this.logger.info("User logged in", { id: user._id });
 
             setCookie(res, String(user.id));
-            res.status(200).json({ id: user._id });
+            res.status(200).json({
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                },
+            });
         } catch (error) {
             return next(error);
         }

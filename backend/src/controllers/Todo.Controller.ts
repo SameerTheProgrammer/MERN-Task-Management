@@ -114,13 +114,17 @@ export class TodoController {
                 (todo) => todo.status === "Progress",
             );
             const Under_Review = allTodos.filter(
-                (todo) => todo.status === "Under_Review",
+                (todo) => todo.status === "Under Review",
             );
             const Completed = allTodos.filter(
                 (todo) => todo.status === "Completed",
             );
 
-            res.status(200).json({ Progress, Under_Review, Completed });
+            res.status(200).json({
+                Progress,
+                "Under Review": Under_Review,
+                Completed,
+            });
         } catch (error) {
             return next(error);
         }
