@@ -63,6 +63,18 @@ router.get(
 );
 
 router.get(
+    "/get-by-status",
+    isAuthenticated as unknown as RequestHandler,
+    (req, res, next) => {
+        todoController.getByStatus(
+            req as AuthMiddlewareRequest,
+            res,
+            next,
+        ) as unknown as RequestHandler;
+    },
+);
+
+router.get(
     "/:id",
     isAuthenticated as unknown as RequestHandler,
     (req, res, next) => {

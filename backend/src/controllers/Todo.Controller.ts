@@ -93,6 +93,38 @@ export class TodoController {
         }
     }
 
+    async getByStatus(
+        req: AuthMiddlewareRequest,
+        res: Response,
+        next: NextFunction,
+    ) {
+        try {
+            const userId = req.userId;
+
+            this.logger.info(
+                "New request to get all self todo based on status",
+                {
+                    userId,
+                },
+            );
+
+            const allTodos = await this.TodoService.findByUserId(userId!);
+
+            const Progress = allTodos.filter(
+                (todo) => todo.status === "Progress",
+            );
+            const Under_Review = allTodos.filter(
+                (todo) => todo.status === "Under_Review",
+            );
+            const Completed = allTodos.filter(
+                (todo) => todo.status === "Completed",
+            );
+
+            res.status(200).json({ Progress, Under_Review, Completed });
+        } catch (error) {
+            return next(error);
+        }
+    }
     async getSelfOneTodo(
         req: AuthMiddlewareRequest,
         res: Response,
