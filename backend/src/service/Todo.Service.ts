@@ -17,7 +17,7 @@ export class TodoService {
             status,
             priority,
             user,
-            deadline: deadline ? new Date(deadline) : undefined,
+            deadline,
         });
 
         return await newTodo.save();
@@ -36,9 +36,7 @@ export class TodoService {
         isTodoExists.description = description || isTodoExists.description;
         isTodoExists.status = status || isTodoExists.status;
         isTodoExists.priority = priority || isTodoExists.priority;
-        isTodoExists.deadline = deadline
-            ? new Date(deadline)
-            : isTodoExists.deadline;
+        isTodoExists.deadline = deadline || isTodoExists.deadline;
 
         return await isTodoExists.save();
     }

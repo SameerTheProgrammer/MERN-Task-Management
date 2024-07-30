@@ -5,7 +5,7 @@ export interface ITodo extends Document {
     description?: string;
     status: string;
     priority: string;
-    deadline: Date | null;
+    deadline?: string;
     user: mongoose.Schema.Types.ObjectId;
 }
 
@@ -33,8 +33,8 @@ const todoSchema = new mongoose.Schema<ITodo>(
             default: "Under Review",
         },
         deadline: {
-            type: Date,
-            default: null,
+            type: String,
+            default: "",
         },
         user: {
             type: mongoose.Schema.ObjectId,

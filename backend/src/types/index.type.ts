@@ -38,7 +38,7 @@ export interface ITodoData {
     description?: string;
     status: string;
     priority: string;
-    deadline: Date | null;
+    deadline: string;
     user?: string;
 }
 
