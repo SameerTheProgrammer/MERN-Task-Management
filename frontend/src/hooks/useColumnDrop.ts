@@ -1,29 +1,24 @@
-import { useDrop } from 'react-dnd';
-import { ColumnType, ItemType } from '../utils/enums';
-import { DragItem, TaskModel } from '../utils/models';
+// useColumnDrop.ts
+import { useDrop } from "react-dnd";
+import { ColumnType } from "../utils/enums";
+import { useAppDispatch } from "../store/hooks";
+import { moveTask } from "../store/tasksSlice";
 
-function useColumnDrop(
-  column: ColumnType,
-  handleDrop: (fromColumn: ColumnType, taskId: TaskModel['id']) => void,
-) {
-  const [{ isOver }, dropRef] = useDrop<DragItem, void, { isOver: boolean }>({
-    accept: ItemType.TASK,
-    drop: (dragItem) => {
-      if (!dragItem || dragItem.from === column) {
-        return;
-      }
+const useColumnDrop = (column: ColumnType) => {
+  const dispatch = useAppDispatch();
 
-      handleDrop(dragItem.from, dragItem.id);
+  const [{ isOver }, dropRef] = useDrop({
+    accept: "TASK",
+    drop: (item: { id: string; from: ColumnType }) => {
+      console.log({ from: item.from, to: column, id: item.id });
+      dispatch(moveTask({ from: item.from, to: column, id: item.id }));
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   });
 
-  return {
-    isOver,
-    dropRef,
-  };
-}
+  return { dropRef, isOver };
+};
 
 export default useColumnDrop;

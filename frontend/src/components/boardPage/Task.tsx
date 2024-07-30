@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Badge,
   Box,
@@ -9,42 +8,38 @@ import {
   ScaleFade,
   Text,
 } from "@chakra-ui/react";
-// import { TaskModel } from "../../utils/models";
-// import { useTaskDragAndDrop } from "../../hooks/useTaskDragAndDrop";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa6";
 import { GoPencil } from "react-icons/go";
 import { HeadingType } from "../../utils/enums";
 import { InitialValues, TaskData } from "../../utils/types";
 import moment from "moment";
+import { useDrag } from "react-dnd";
 
 type TaskProps = {
   index: number;
   task: TaskData;
-  // onDropHover: (i: number, j: number) => void;
   onOpen: () => void;
   setHeadingType: React.Dispatch<React.SetStateAction<HeadingType | undefined>>;
   setInitialValues: React.Dispatch<React.SetStateAction<InitialValues>>;
 };
 
-function Task({
-  // index,
-  task,
-  // onDropHover: handleDropHover,
-  onOpen,
-  setHeadingType,
-  setInitialValues,
-}: TaskProps) {
-  // const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
-  //   { task, index: index },
-  //   handleDropHover
-  // );
+function Task({ task, onOpen, setHeadingType, setInitialValues }: TaskProps) {
+  const [{ isDragging }, dragRef] = useDrag({
+    type: "TASK",
+    item: { id: task.id, from: task.status },
+    collect: (monitor) => {
+      console.log({ id: task.id, from: task.status });
+      return {
+        isDragging: monitor.isDragging(),
+      };
+    },
+  });
 
   return (
     <ScaleFade in={true} unmountOnExit>
       <Box
-        // ref={ref}
-        as="div"
+        ref={dragRef}
         role="group"
         position="relative"
         rounded="lg"
@@ -55,11 +50,9 @@ function Task({
         pb={1}
         cursor="grab"
         userSelect="none"
-        // bgColor={task.color}
-        bgColor={"gray.50"}
+        bgColor={isDragging ? "gray.100" : "gray.50"}
         borderWidth="2px"
         borderColor={"gray.200"}
-        // opacity={isDragging ? 0.5 : 1}
       >
         <IconButton
           position="absolute"
@@ -148,18 +141,5 @@ function Task({
     </ScaleFade>
   );
 }
-// export default memo(Task, (prev, next) => {
-//   if (
-//     _.isEqual(prev.task, next.task) &&
-//     _.isEqual(prev.index, next.index) &&
-//     prev.onDelete === next.onDelete &&
-//     prev.onDropHover === next.onDropHover &&
-//     prev.onUpdate === next.onUpdate
-//   ) {
-//     return true;
-//   }
-
-//   return false;
-// });
 
 export default Task;

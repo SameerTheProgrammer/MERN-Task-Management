@@ -55,20 +55,26 @@ const taskSlice = createSlice({
       let taskToMove: TaskData | undefined;
       const fromList = state[from];
       const toList = state[to];
-
       const index = fromList.findIndex((task) => task.id === id);
+
       if (index !== -1) {
         taskToMove = fromList[index];
         fromList.splice(index, 1);
       }
-      // if (index !== -1) {
-      //   taskToMove = fromList.splice(index, 1)[0];
-      // }
 
       if (taskToMove) {
         taskToMove.status = to;
-        toList.push(taskToMove);
+        toList.unshift(taskToMove);
       }
+
+      console.log("reducers", {
+        index,
+        from,
+        to,
+        id,
+        taskToMove,
+        toList,
+      });
     },
 
     reorderTasks(

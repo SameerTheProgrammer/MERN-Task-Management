@@ -8,7 +8,6 @@ import FullBodySpinner from "../components/FullBodySpinner";
 const RootLayout = () => {
   const dispatch = useAppDispatch();
   const response = useSelfDataQuery(undefined);
-  console.log({ ...response.data?.user });
 
   useEffect(() => {
     if (response.data) {

@@ -3,7 +3,7 @@ import { Flex, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import Filters from "../components/boardPage/Filters";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Column from "../components/boardPage/Column2";
+import Column from "../components/boardPage/Column";
 import { ColumnType, HeadingType } from "../utils/enums";
 import TodoModel from "../components/boardPage/TodoModel";
 import { useEffect, useState } from "react";
