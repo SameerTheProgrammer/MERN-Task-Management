@@ -7,6 +7,7 @@ import {
   Icon,
   Button,
   IconButton,
+  Toast,
 } from "@chakra-ui/react";
 import { FiHome, FiSettings } from "react-icons/fi";
 import { IoSunnyOutline } from "react-icons/io5";
@@ -20,9 +21,35 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { CiViewBoard } from "react-icons/ci";
 import { GoGraph, GoPeople } from "react-icons/go";
+import { useAppDispatch } from "../../store/hooks";
+import { clearUser } from "../../store/userSlice";
+import { useLogoutMutation } from "../../store/userApi";
+import FullBodySpinner from "../FullBodySpinner";
+import { Navigate } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   const [navSize, changeNavSize] = useState<"small" | "large">("large");
+  const dispatch = useAppDispatch();
+
+  const [logout, { isLoading }] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logout(undefined).unwrap();
+      dispatch(clearUser());
+      return <Navigate to={"/auth/login"} replace={true} />;
+    } catch (err) {
+      Toast({
+        title: `Logout failed: ${err}`,
+        status: "error",
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
+  if (isLoading) {
+    return <FullBodySpinner />;
+  }
 
   return (
     <div>
@@ -70,7 +97,13 @@ const Sidebar: React.FC = () => {
                 <Icon as={MdKeyboardDoubleArrowRight} fontSize={"larger"} />
               </Flex>
               <Flex>
-                <Button colorScheme="gray" variant="solid" size="xs">
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  size="xs"
+                  onClick={handleLogout}
+                  isLoading={isLoading}
+                >
                   <Icon
                     as={FaArrowRightFromBracket}
                     fontSize={"medium"}

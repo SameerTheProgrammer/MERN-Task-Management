@@ -97,4 +97,16 @@ export class UserController {
             return next(error);
         }
     }
+
+    logout(req: AuthMiddlewareRequest, res: Response, next: NextFunction) {
+        try {
+            this.logger.info("User has been logged out", { id: req.userId });
+
+            res.clearCookie("task");
+            res.json({});
+        } catch (err) {
+            next(err);
+            return;
+        }
+    }
 }

@@ -41,5 +41,16 @@ router.get(
         ) as unknown as RequestHandler;
     },
 );
+router.post(
+    "/logout",
+    isAuthenticated as unknown as RequestHandler,
+    (req, res, next) => {
+        userController.logout(
+            req as AuthMiddlewareRequest,
+            res,
+            next,
+        ) as unknown as RequestHandler;
+    },
+);
 
 export default router;

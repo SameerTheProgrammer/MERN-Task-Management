@@ -3,7 +3,7 @@ import { useSelfDataQuery } from "../store/userApi";
 import { useAppDispatch } from "./../store/hooks";
 import { setUser } from "../store/userSlice";
 import { useEffect } from "react";
-import { Skeleton, Spinner, Stack } from "@chakra-ui/react";
+import FullBodySpinner from "../components/FullBodySpinner";
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();
@@ -18,22 +18,7 @@ const RootLayout = () => {
   }, [dispatch, response.data]);
 
   if (response.isLoading) {
-    return (
-      <div>
-        <Stack>
-          <Skeleton height="20px" />
-          <Skeleton height="20px" />
-          <Skeleton height="20px" />
-        </Stack>
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </div>
-    );
+    return <FullBodySpinner />;
   }
 
   return <Outlet />;

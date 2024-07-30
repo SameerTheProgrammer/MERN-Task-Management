@@ -18,8 +18,15 @@ const apiSlice = createApi({
     selfData: builder.query({
       query: () => "/",
     }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "POST", // Change to POST if needed for logout
+      }),
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useSelfDataQuery } = apiSlice;
+export const { useRegisterUserMutation, useSelfDataQuery, useLogoutMutation } =
+  apiSlice;
 export default apiSlice;

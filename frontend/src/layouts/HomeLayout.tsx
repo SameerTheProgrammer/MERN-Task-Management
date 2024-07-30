@@ -5,7 +5,7 @@ import { useAppSelector } from "../store/hooks";
 
 const HomeLayout = () => {
   const user = useAppSelector((state) => state.user);
-  if (user === null) {
+  if (!user || !user.id || !user.name || !user.email) {
     return <Navigate to={"/auth/login"} replace={true} />;
   }
   return (
