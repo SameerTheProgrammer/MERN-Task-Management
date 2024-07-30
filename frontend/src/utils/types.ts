@@ -1,3 +1,5 @@
+import { ColumnType, Priority } from "./enums";
+
 export interface InitialValues {
   title: string;
   status: string;
@@ -11,6 +13,20 @@ export interface UserRegisterData {
   email: string;
   password: string;
   cpassword: string;
+}
+
+export interface UserLoginData {
+  email: string;
+  password: string;
+}
+
+export interface TaskData {
+  id?: string;
+  title: string;
+  description: string;
+  status: ColumnType;
+  priority: Priority;
+  deadline: Date;
 }
 
 export interface APIError {

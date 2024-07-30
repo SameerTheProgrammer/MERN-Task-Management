@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Badge,
   Box,
@@ -8,41 +9,41 @@ import {
   ScaleFade,
   Text,
 } from "@chakra-ui/react";
-import { TaskModel } from "../../utils/models";
-import { useTaskDragAndDrop } from "../../hooks/useTaskDragAndDrop";
+// import { TaskModel } from "../../utils/models";
+// import { useTaskDragAndDrop } from "../../hooks/useTaskDragAndDrop";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa6";
 import { GoPencil } from "react-icons/go";
 import { HeadingType } from "../../utils/enums";
-import { InitialValues } from "../../utils/types";
+import { InitialValues, TaskData } from "../../utils/types";
 import moment from "moment";
 
 type TaskProps = {
   index: number;
-  task: TaskModel;
-  onDropHover: (i: number, j: number) => void;
+  task: TaskData;
+  // onDropHover: (i: number, j: number) => void;
   onOpen: () => void;
   setHeadingType: React.Dispatch<React.SetStateAction<HeadingType | undefined>>;
   setInitialValues: React.Dispatch<React.SetStateAction<InitialValues>>;
 };
 
 function Task({
-  index,
+  // index,
   task,
-  onDropHover: handleDropHover,
+  // onDropHover: handleDropHover,
   onOpen,
   setHeadingType,
   setInitialValues,
 }: TaskProps) {
-  const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
-    { task, index: index },
-    handleDropHover
-  );
+  // const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>(
+  //   { task, index: index },
+  //   handleDropHover
+  // );
 
   return (
     <ScaleFade in={true} unmountOnExit>
       <Box
-        ref={ref}
+        // ref={ref}
         as="div"
         role="group"
         position="relative"
@@ -58,7 +59,7 @@ function Task({
         bgColor={"gray.50"}
         borderWidth="2px"
         borderColor={"gray.200"}
-        opacity={isDragging ? 0.5 : 1}
+        // opacity={isDragging ? 0.5 : 1}
       >
         <IconButton
           position="absolute"
@@ -121,19 +122,23 @@ function Task({
             >
               {task.priority}
             </Badge>
-            <Flex
-              alignItems={"center"}
-              columnGap={"10px"}
-              color={"gray.500"}
-              fontWeight={"bold"}
-            >
-              <Icon boxSize={4} as={FaRegClock} />
-              <Text fontSize={"13px"}>
-                {task.deadline
-                  ? moment(task.deadline).format("YYYY-MM-DD hh:mm:ss A")
-                  : ""}
-              </Text>
-            </Flex>
+            {task.deadline ? (
+              <Flex
+                alignItems={"center"}
+                columnGap={"10px"}
+                color={"gray.500"}
+                fontWeight={"bold"}
+              >
+                <Icon boxSize={4} as={FaRegClock} />
+                <Text fontSize={"13px"}>
+                  {task.deadline
+                    ? moment(task.deadline).format("YYYY-MM-DD hh:mm:ss A")
+                    : ""}
+                </Text>
+              </Flex>
+            ) : (
+              " "
+            )}
           </Flex>
           <Text color={"gray.500"} fontWeight={"bold"} fontSize={"sm"}>
             1 hr ago

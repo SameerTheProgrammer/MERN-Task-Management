@@ -1,11 +1,12 @@
 import { Box, Button, Container, Stack, Text } from "@chakra-ui/react";
 import Task from "./Task";
 import { ColumnType, HeadingType } from "../../utils/enums";
-import useColumnTasks from "../../hooks/useColumnTasks";
-import useColumnDrop from "../../hooks/useColumnDrop";
+// import useColumnTasks from "../../hooks/useColumnTasks";
+// import useColumnDrop from "../../hooks/useColumnDrop";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { InitialValues } from "../../utils/types";
+import { useAppSelector } from "../../store/hooks";
 
 interface ColumnProps {
   onOpen: () => void;
@@ -20,12 +21,14 @@ const Column: React.FC<ColumnProps> = ({
   onOpen,
   setInitialValues,
 }) => {
-  const { tasks, dropTaskFrom, swapTasks } = useColumnTasks(column);
-  useEffect(() => {
-    console.log(`Tasks for column ${column}:`, tasks);
-  }, [tasks, column]);
+  // const { tasks, dropTaskFrom, swapTasks } = useColumnTasks(column);
+  // useEffect(() => {
+  //   console.log(`Tasks for column ${column}:`, tasks);
+  // }, [tasks, column]);
 
-  const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
+  // const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
+  const tasks = useAppSelector((state) => state.tasks[column]);
+
   return (
     <Box px={1} h={"100%"}>
       <Container
@@ -65,14 +68,14 @@ const Column: React.FC<ColumnProps> = ({
       </Container>
 
       <Stack
-        ref={dropRef}
+        // ref={dropRef}
         direction={{ base: "row", md: "column" }}
         h={"70vh"}
         p={1}
         mt={2}
         spacing={4}
         rounded="lg"
-        opacity={isOver ? 0.85 : 1}
+        // opacity={isOver ? 0.85 : 1}
         overflowY={"scroll"}
         css={{
           "&::-webkit-scrollbar": {
@@ -86,7 +89,7 @@ const Column: React.FC<ColumnProps> = ({
               key={task.id}
               task={task}
               index={index}
-              onDropHover={swapTasks}
+              // onDropHover={swapTasks}
               onOpen={onOpen}
               setHeadingType={setHeadingType}
               setInitialValues={setInitialValues}

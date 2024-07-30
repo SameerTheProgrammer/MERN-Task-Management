@@ -120,6 +120,8 @@ export class TodoController {
                 (todo) => todo.status === "Completed",
             );
 
+            console.log(userId, allTodos);
+
             res.status(200).json({
                 Progress,
                 "Under Review": Under_Review,

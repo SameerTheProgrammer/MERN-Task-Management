@@ -6,10 +6,14 @@ import Column from "../components/boardPage/Column";
 // import DarkModeIconButton from "../components/homePage/board/DarkModeIconButton";
 import { ColumnType, HeadingType } from "../utils/enums";
 import TodoModel from "../components/boardPage/TodoModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InitialValues } from "../utils/types";
+import { useGetAllByStatusQuery } from "../store/tasksApi";
+import { setAllTasks } from "../store/tasksSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const BoardPage = () => {
+  const dispatch = useAppDispatch();
   const [headingType, setHeadingType] = useState<HeadingType>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [initialValues, setInitialValues] = useState<InitialValues>({
@@ -19,6 +23,19 @@ const BoardPage = () => {
     deadline: null,
     description: "",
   });
+
+  const user = useAppSelector((state) => state.user);
+  const { data, error, isLoading } = useGetAllByStatusQuery(user.id);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setAllTasks(data));
+    }
+  }, [data, dispatch]);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching tasks</p>;
+
   return (
     <>
       <Flex direction={"column"} gap={"15px"}>
@@ -46,6 +63,7 @@ const BoardPage = () => {
                 onOpen={onOpen}
                 setHeadingType={setHeadingType}
                 column={ColumnType.COMPLETED}
+                // tasks={tasks.Completed}
               />
             </SimpleGrid>
           </DndProvider>

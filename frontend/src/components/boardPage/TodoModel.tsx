@@ -42,7 +42,6 @@ const TodoModel: React.FC<TodoModelProps> = ({
   initialValues,
   setInitialValues,
 }) => {
-  console.log("initialValues", initialValues);
   const choseHandler = () => {
     onClose();
     setInitialValues({
