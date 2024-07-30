@@ -21,7 +21,7 @@ app.use(express.json());
 
 // All security related middlewares
 const corsOptions = {
-    origin: env.FRONTEND_URL,
+    origin: "http://localhost:5173",
     credentials: true,
 };
 

@@ -21,7 +21,7 @@ export const env = cleanEnv(process.env, {
     JWT_SECRET: str(),
     JWT_TOKEN_EXPIRY_DAYS: str(),
     COOKIE_MAXAGE_DAYS: num(),
-
+    COOKIE_DOMAIN: str(),
     FRONTEND_URL: str(),
 });
 
