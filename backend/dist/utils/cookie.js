@@ -15,9 +15,8 @@ const setCookie = (res, userId) => {
     const token = generateJwtToken(userId);
     res.cookie("task", token, {
         httpOnly: true,
-        domain: dotenv_1.default.COOKIE_DOMAIN,
-        // sameSite: "none",
-        // secure: env.NODE_ENV === "production",
+        sameSite: "none",
+        secure: dotenv_1.default.NODE_ENV === "production",
         maxAge: 1000 * 60 * 60 * 24 * Number(dotenv_1.default.COOKIE_MAXAGE_DAYS),
     });
 };

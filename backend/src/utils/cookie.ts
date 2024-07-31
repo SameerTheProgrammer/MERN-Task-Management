@@ -12,9 +12,8 @@ export const setCookie = (res: Response, userId: string) => {
     const token = generateJwtToken(userId);
     res.cookie("task", token, {
         httpOnly: true,
-        domain: env.COOKIE_DOMAIN,
-        // sameSite: "none",
-        // secure: env.NODE_ENV === "production",
+        sameSite: "none",
+        secure: env.NODE_ENV === "production",
         maxAge: 1000 * 60 * 60 * 24 * Number(env.COOKIE_MAXAGE_DAYS),
     });
 };
