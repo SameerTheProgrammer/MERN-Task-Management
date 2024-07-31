@@ -30,3 +30,4 @@ router.get("/:id", authMiddleware_1.isAuthenticated, (req, res, next) => {
     todoController.getSelfOneTodo(req, res, next);
 });
 exports.default = router;
+//# sourceMappingURL=todo.route.js.map

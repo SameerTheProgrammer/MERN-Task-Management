@@ -26,3 +26,4 @@ exports.env = (0, envalid_1.cleanEnv)(process.env, {
     FRONTEND_URL: (0, envalid_1.str)(),
 });
 exports.default = exports.env;
+//# sourceMappingURL=dotenv.js.map

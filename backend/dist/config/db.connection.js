@@ -20,3 +20,4 @@ const connectDatabase = () => __awaiter(void 0, void 0, void 0, function* () {
     logger_1.default.info(`Mongodb connected with server: ${data.connection.host}`);
 });
 exports.default = connectDatabase;
+//# sourceMappingURL=db.connection.js.map

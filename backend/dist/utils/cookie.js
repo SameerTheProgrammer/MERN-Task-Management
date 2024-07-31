@@ -22,3 +22,4 @@ const setCookie = (res, userId) => {
     });
 };
 exports.setCookie = setCookie;
+//# sourceMappingURL=cookie.js.map

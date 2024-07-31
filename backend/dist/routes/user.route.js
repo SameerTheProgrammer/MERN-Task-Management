@@ -24,3 +24,4 @@ router.post("/logout", authMiddleware_1.isAuthenticated, (req, res, next) => {
     userController.logout(req, res, next);
 });
 exports.default = router;
+//# sourceMappingURL=user.route.js.map
