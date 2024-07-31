@@ -37,12 +37,6 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Welcome to Task Management site");
 });
 
-app.get("/", (req: Request, res: Response) => {
-    res.json({
-        message: "Hello, i am backend of Taskman",
-    });
-});
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof Error) {
