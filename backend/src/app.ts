@@ -20,7 +20,12 @@ app.use(express.json());
 
 // All security related middlewares
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    }),
+);
 app.use(helmet());
 app.use(compression());
 app.use(cookieParser());
