@@ -28,7 +28,7 @@ const taskSlice = createSlice({
 
     addTask(state, action: PayloadAction<TaskData>) {
       const task = action.payload;
-      state[task.status].push(task);
+      state[task.status].unshift(task);
     },
 
     updateTaskInfo(
