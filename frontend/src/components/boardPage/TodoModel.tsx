@@ -32,9 +32,10 @@ import {
   useUpdateTaskMutation,
 } from "../../store/tasksApi";
 import { ColumnType, HeadingType, Priority } from "../../utils/enums";
-import { addTask } from "../../store/tasksSlice";
+import { addTask, updateTaskInfo } from "../../store/tasksSlice";
 
 interface TodoModelProps {
+  id?: string;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -51,7 +52,7 @@ const TodoModel: React.FC<TodoModelProps> = ({
   setInitialValues,
 }) => {
   const dispatch = useAppDispatch();
-  const [loginUser] = useCreateTaskMutation();
+  const [createTask] = useCreateTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
   const toast = useToast();
 
@@ -62,12 +63,19 @@ const TodoModel: React.FC<TodoModelProps> = ({
     try {
       setSubmitting(true);
       let response;
-      if (heading == HeadingType.EDIT) {
-        response = updateTask(values).unwrap();
+      if (heading == HeadingType.ADD) {
+        response = await createTask(values).unwrap();
+        if (response.task) {
+          dispatch(addTask(response.task));
+        }
+        return;
       }
-      response = await loginUser(values).unwrap();
+
+      response = await updateTask(values).unwrap();
       if (response.task) {
-        dispatch(addTask(response.task));
+        dispatch(
+          updateTaskInfo({ id: response.task.id, updatedTask: response.task })
+        );
       }
     } catch (error) {
       if ((error as APIError).data) {
