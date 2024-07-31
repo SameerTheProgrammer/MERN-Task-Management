@@ -9,7 +9,7 @@ const startServer = async () => {
     try {
         await connectDatabase();
         app.listen(PORT, () => {
-            logger.info(`server is running on port ${PORT}..`);
+            logger.info(`Server is running on port ${PORT}..`);
         });
     } catch (error) {
         if (error instanceof Error) {
