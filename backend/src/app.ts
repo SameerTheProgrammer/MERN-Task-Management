@@ -42,13 +42,10 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Welcome to Task Management site");
 });
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/require-await
-app.get("/error", async (req: Request, res: Response, next: NextFunction) => {
-    const err = createHttpError(
-        401,
-        "Hey, you don't have permission to access this page",
-    );
-    return next(err);
+app.get("/",  (req: Request, res: Response,) => {
+    res.json({
+        message:"Hello, i am backend of Taskman"
+    })
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
