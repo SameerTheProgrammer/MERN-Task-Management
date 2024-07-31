@@ -12,7 +12,7 @@
         "build": "rimraf dist && tsc",
         "ts.check": "tsc --project tsconfig.json",
         "add-build": "git add dist",
-        "start": "nodemon src/index.ts",
+        "start": "nodemon src/server.ts",
         "dev": " cross-env NODE_ENV=dev nodemon src/server.ts",
         "format:check": "prettier . --check",
         "format:fix": "prettier . --write",
