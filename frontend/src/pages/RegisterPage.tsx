@@ -245,6 +245,13 @@ const RegisterPage = () => {
                       Log in
                     </ChakraLink>
                   </Box>
+                  <Box as="div" textAlign={"center"} mb={4}>
+                    <Text>
+                      Wants to login quickly without register use below data to
+                      login
+                    </Text>
+                    <Text>Email:- admin100@gmail.com Password:- 123456789</Text>
+                  </Box>
                 </Flex>
               </Form>
             )}

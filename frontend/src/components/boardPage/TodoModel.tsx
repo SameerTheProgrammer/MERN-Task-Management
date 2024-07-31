@@ -45,6 +45,7 @@ interface TodoModelProps {
 }
 
 const TodoModel: React.FC<TodoModelProps> = ({
+  id,
   isOpen,
   onClose,
   heading,
@@ -70,12 +71,9 @@ const TodoModel: React.FC<TodoModelProps> = ({
         }
         return;
       }
-
-      response = await updateTask(values).unwrap();
+      response = await updateTask({ id, ...values }).unwrap();
       if (response.task) {
-        dispatch(
-          updateTaskInfo({ id: response.task.id, updatedTask: response.task })
-        );
+        dispatch(updateTaskInfo({ id: id!, updatedTask: response.task }));
       }
     } catch (error) {
       if ((error as APIError).data) {

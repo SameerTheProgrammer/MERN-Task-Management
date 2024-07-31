@@ -9,8 +9,8 @@ const todoSchema = new mongoose_1.default.Schema({
     title: {
         type: String,
         required: [true, "Please enter title"],
-        maxLength: [100, "title cannot exceed 100 characters"],
-        minLength: [2, "title should have at least 2 characters"],
+        maxLength: [200, "title cannot exceed 200 characters"],
+        minLength: [1, "title should have at least 1 characters"],
     },
     description: {
         type: String,

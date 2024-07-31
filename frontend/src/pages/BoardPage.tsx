@@ -17,6 +17,7 @@ const BoardPage = () => {
   const [headingType, setHeadingType] = useState<HeadingType>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [initialValues, setInitialValues] = useState<InitialValues>({
+    id: "",
     title: "",
     status: ColumnType.UNDER_REVIREW,
     priority: Priority.LOW,

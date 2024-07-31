@@ -113,6 +113,7 @@ function Task({ task, onOpen, setHeadingType, setInitialValues }: TaskProps) {
           }}
           onClick={() => {
             setInitialValues({
+              id: task.id,
               title: task.title,
               status: task.status,
               priority: task.priority,

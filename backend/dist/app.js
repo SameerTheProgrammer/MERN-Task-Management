@@ -16,11 +16,14 @@ const express_mongo_sanitize_1 = __importDefault(require("express-mongo-sanitize
 const logger_1 = __importDefault(require("./config/logger"));
 const user_route_1 = __importDefault(require("./routes/user.route"));
 const todo_route_1 = __importDefault(require("./routes/todo.route"));
+const dotenv_1 = __importDefault(require("./config/dotenv"));
 // Initialize Express app
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // All security related middlewares
-const allowedOrigins = ["https://taskman-hazel.vercel.app"]; // Replace with your frontend's origin
+const allowedOrigins = dotenv_1.default.NODE_ENV === "production"
+    ? ["https://taskman-hazel.vercel.app,"]
+    : ["http://localhost:5173"];
 app.use((0, cors_1.default)({
     origin: (origin, callback) => {
         if (allowedOrigins.includes(origin) || !origin) {

@@ -12,6 +12,7 @@ import sanitize from "express-mongo-sanitize";
 import logger from "./config/logger";
 import userRouter from "./routes/user.route";
 import todoRouter from "./routes/todo.route";
+import env from "./config/dotenv";
 
 // Initialize Express app
 const app = express();
@@ -20,7 +21,10 @@ app.use(express.json());
 
 // All security related middlewares
 
-const allowedOrigins = ["https://taskman-hazel.vercel.app"]; // Replace with your frontend's origin
+const allowedOrigins =
+    env.NODE_ENV === "production"
+        ? ["https://taskman-hazel.vercel.app,"]
+        : ["http://localhost:5173"];
 
 app.use(
     cors({

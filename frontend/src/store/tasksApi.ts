@@ -17,8 +17,8 @@ const tasksApiSlice = createApi({
     }),
 
     updateTask: builder.mutation({
-      query: (task: TaskData) => ({
-        url: `/${task.id}`,
+      query: ({ id, task }) => ({
+        url: `/${id}`,
         method: "PUT",
         body: task,
       }),

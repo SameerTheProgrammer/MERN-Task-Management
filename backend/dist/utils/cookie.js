@@ -11,14 +11,12 @@ const generateJwtToken = (userId) => {
         expiresIn: dotenv_1.default.JWT_TOKEN_EXPIRY_DAYS,
     });
 };
+const option = dotenv_1.default.NODE_ENV === "production"
+    ? { sameSite: "none", secure: true }
+    : {};
 const setCookie = (res, userId) => {
     const token = generateJwtToken(userId);
-    res.cookie("task", token, {
-        httpOnly: true,
-        sameSite: "none",
-        secure: dotenv_1.default.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24 * Number(dotenv_1.default.COOKIE_MAXAGE_DAYS),
-    });
+    res.cookie("task", token, Object.assign(Object.assign({}, option), { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * Number(dotenv_1.default.COOKIE_MAXAGE_DAYS) }));
 };
 exports.setCookie = setCookie;
 //# sourceMappingURL=cookie.js.map

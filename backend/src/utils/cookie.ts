@@ -8,12 +8,16 @@ const generateJwtToken = (userId: string) => {
     });
 };
 
+const option =
+    env.NODE_ENV === "production"
+        ? { sameSite: "none" as const, secure: true }
+        : {};
+
 export const setCookie = (res: Response, userId: string) => {
     const token = generateJwtToken(userId);
     res.cookie("task", token, {
+        ...option,
         httpOnly: true,
-        sameSite: "none",
-        secure: env.NODE_ENV === "production",
         maxAge: 1000 * 60 * 60 * 24 * Number(env.COOKIE_MAXAGE_DAYS),
     });
 };
