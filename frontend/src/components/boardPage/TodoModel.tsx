@@ -35,7 +35,7 @@ import { ColumnType, HeadingType, Priority } from "../../utils/enums";
 import { addTask, updateTaskInfo } from "../../store/tasksSlice";
 
 interface TodoModelProps {
-  id?: string;
+  id: string;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -96,6 +96,7 @@ const TodoModel: React.FC<TodoModelProps> = ({
   const choseHandler = () => {
     onClose();
     setInitialValues({
+      id: "",
       title: "",
       status: ColumnType.UNDER_REVIREW,
       priority: Priority.LOW,

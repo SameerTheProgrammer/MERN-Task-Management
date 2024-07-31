@@ -69,6 +69,7 @@ const BoardPage = () => {
         </Flex>
       </Flex>
       <TodoModel
+        id={initialValues.id}
         setInitialValues={setInitialValues}
         initialValues={initialValues}
         isOpen={isOpen}

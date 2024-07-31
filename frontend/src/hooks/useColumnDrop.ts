@@ -15,7 +15,6 @@ const useColumnDrop = (column: ColumnType) => {
       if (item.status !== column) {
         console.log({ from: item.status, to: column, id: item.id! });
         dispatch(moveTask({ from: item.status, to: column, id: item.id! }));
-
         try {
           await updateTask({
             id: item.id,

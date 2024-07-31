@@ -63,6 +63,19 @@ function Task({ task, onOpen, setHeadingType, setInitialValues }: TaskProps) {
     },
   });
 
+  const editHandler = () => {
+    setInitialValues({
+      id: task.id,
+      title: task.title,
+      status: task.status,
+      priority: task.priority,
+      deadline: task.deadline,
+      description: task.description,
+    });
+    setHeadingType(HeadingType.EDIT);
+    onOpen();
+  };
+
   return (
     <ScaleFade in={true} unmountOnExit>
       <Box
@@ -111,18 +124,7 @@ function Task({ task, onOpen, setHeadingType, setInitialValues }: TaskProps) {
           _groupHover={{
             opacity: 1,
           }}
-          onClick={() => {
-            setInitialValues({
-              id: task.id,
-              title: task.title,
-              status: task.status,
-              priority: task.priority,
-              deadline: task.deadline,
-              description: task.description,
-            });
-            setHeadingType(HeadingType.EDIT);
-            onOpen();
-          }}
+          onClick={editHandler}
         />
         <Flex direction={"column"} rowGap={"8px"}>
           <Heading color={"gray.500"} as={"h4"} size={"sm"}>

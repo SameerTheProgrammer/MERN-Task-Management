@@ -66,15 +66,6 @@ const taskSlice = createSlice({
         taskToMove.status = to;
         toList.unshift(taskToMove);
       }
-
-      console.log("reducers", {
-        index,
-        from,
-        to,
-        id,
-        taskToMove,
-        toList,
-      });
     },
 
     revertMoveTask(
