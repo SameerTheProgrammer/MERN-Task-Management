@@ -6,6 +6,19 @@ const tasksApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BACKEND_URL}/todo`,
     credentials: "include",
+    prepareHeaders: (headers) => {
+      headers.set("Access-Control-Allow-Credentials", "true");
+      headers.set("Access-Control-Allow-Origin", "*");
+      headers.set(
+        "Access-Control-Allow-Methods",
+        "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+      );
+      headers.set(
+        "Access-Control-Allow-Headers",
+        "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+      );
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     createTask: builder.mutation({

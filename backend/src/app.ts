@@ -12,6 +12,7 @@ import sanitize from "express-mongo-sanitize";
 import logger from "./config/logger";
 import userRouter from "./routes/user.route";
 import todoRouter from "./routes/todo.route";
+import env from "./config/dotenv";
 
 // Initialize Express app
 const app = express();
@@ -22,8 +23,19 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: "*",
+        origin: env.FRONTEND_URL,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        allowedHeaders: [
+            "X-CSRF-Token",
+            "X-Requested-With",
+            "Accept",
+            "Accept-Version",
+            "Content-Length",
+            "Content-MD5",
+            "Content-Type",
+            "Date",
+            "X-Api-Version",
+        ],
     }),
 );
 app.use(helmet());
