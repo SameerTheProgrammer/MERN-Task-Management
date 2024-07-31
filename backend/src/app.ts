@@ -23,8 +23,12 @@ app.use(express.json());
 app.set("trust proxy", true);
 const allowedOrigins =
     env.NODE_ENV === "production"
-        ? ["https://taskman-hazel.vercel.app,"]
-        : ["http://localhost:5173"];
+        ? ["https://taskman-hazel.vercel.app"]
+        : ["http://localhost:5173", "https://taskman-hazel.vercel.app"];
+
+logger.info(
+    `allowedOrigins ${allowedOrigins[0]} and env.NODE_ENV :- ${env.NODE_ENV}`,
+);
 
 app.use(
     cors({

@@ -23,8 +23,9 @@ app.use(express_1.default.json());
 // All security related middlewares
 app.set("trust proxy", true);
 const allowedOrigins = dotenv_1.default.NODE_ENV === "production"
-    ? ["https://taskman-hazel.vercel.app,"]
-    : ["http://localhost:5173"];
+    ? ["https://taskman-hazel.vercel.app"]
+    : ["http://localhost:5173", "https://taskman-hazel.vercel.app"];
+logger_1.default.info(`allowedOrigins ${allowedOrigins[0]} and env.NODE_ENV :- ${dotenv_1.default.NODE_ENV}`);
 app.use((0, cors_1.default)({
     origin: (origin, callback) => {
         if (allowedOrigins.includes(origin) || !origin) {
