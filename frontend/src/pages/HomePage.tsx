@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import HCard from "./../components/homePage/Card";
 import { cardData } from "./../data/cardData";
@@ -21,6 +21,9 @@ const HomePage = () => {
               description={details.description}
             />
           ))}
+        </Flex>
+        <Flex>
+          <Text></Text>
         </Flex>
       </Flex>
     </>

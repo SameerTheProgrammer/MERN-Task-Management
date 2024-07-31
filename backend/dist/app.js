@@ -21,6 +21,7 @@ const dotenv_1 = __importDefault(require("./config/dotenv"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // All security related middlewares
+app.set("trust proxy", true);
 const allowedOrigins = dotenv_1.default.NODE_ENV === "production"
     ? ["https://taskman-hazel.vercel.app,"]
     : ["http://localhost:5173"];

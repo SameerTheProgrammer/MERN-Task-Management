@@ -20,7 +20,7 @@ const app = express();
 app.use(express.json());
 
 // All security related middlewares
-
+app.set("trust proxy", true);
 const allowedOrigins =
     env.NODE_ENV === "production"
         ? ["https://taskman-hazel.vercel.app,"]
