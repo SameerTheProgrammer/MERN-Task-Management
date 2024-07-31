@@ -71,7 +71,7 @@ const TodoModel: React.FC<TodoModelProps> = ({
         }
         return;
       }
-      response = await updateTask({ id, ...values }).unwrap();
+      response = await updateTask({ id, task: values }).unwrap();
       if (response.task) {
         dispatch(updateTaskInfo({ id: id!, updatedTask: response.task }));
       }

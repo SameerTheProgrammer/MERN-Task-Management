@@ -19,11 +19,13 @@ const useColumnDrop = (column: ColumnType) => {
         try {
           await updateTask({
             id: item.id,
-            status: column,
-            title: item.title,
-            description: item.description,
-            priority: item.priority,
-            deadline: item.deadline,
+            task: {
+              status: column,
+              title: item.title,
+              description: item.description,
+              priority: item.priority,
+              deadline: item.deadline,
+            },
           }).unwrap();
         } catch (error) {
           console.error("Failed to update and Drop task:", error);
