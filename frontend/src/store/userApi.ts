@@ -6,19 +6,6 @@ const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BACKEND_URL}/user`,
     credentials: "include",
-    prepareHeaders: (headers) => {
-      headers.set("Access-Control-Allow-Credentials", "true");
-      headers.set("Access-Control-Allow-Origin", "*");
-      headers.set(
-        "Access-Control-Allow-Methods",
-        "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-      );
-      headers.set(
-        "Access-Control-Allow-Headers",
-        "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-      );
-      return headers;
-    },
   }),
   endpoints: (builder) => ({
     registerUser: builder.mutation({

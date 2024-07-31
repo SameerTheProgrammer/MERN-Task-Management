@@ -20,9 +20,29 @@ const todo_route_1 = __importDefault(require("./routes/todo.route"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // All security related middlewares
+const allowedOrigins = ["https://taskman-hazel.vercel.app"]; // Replace with your frontend's origin
 app.use((0, cors_1.default)({
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true, // Allow cookies and other credentials to be sent
+    methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+    allowedHeaders: [
+        "X-CSRF-Token",
+        "X-Requested-With",
+        "Accept",
+        "Accept-Version",
+        "Content-Length",
+        "Content-MD5",
+        "Content-Type",
+        "Date",
+        "X-Api-Version",
+    ],
 }));
 app.use((0, helmet_1.default)());
 app.use((0, compression_1.default)());

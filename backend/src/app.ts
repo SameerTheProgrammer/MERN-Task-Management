@@ -12,7 +12,6 @@ import sanitize from "express-mongo-sanitize";
 import logger from "./config/logger";
 import userRouter from "./routes/user.route";
 import todoRouter from "./routes/todo.route";
-import env from "./config/dotenv";
 
 // Initialize Express app
 const app = express();
@@ -21,10 +20,19 @@ app.use(express.json());
 
 // All security related middlewares
 
+const allowedOrigins = ["https://taskman-hazel.vercel.app"]; // Replace with your frontend's origin
+
 app.use(
     cors({
-        origin: env.FRONTEND_URL,
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        origin: (origin, callback) => {
+            if (allowedOrigins.includes(origin) || !origin) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true, // Allow cookies and other credentials to be sent
+        methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
         allowedHeaders: [
             "X-CSRF-Token",
             "X-Requested-With",
