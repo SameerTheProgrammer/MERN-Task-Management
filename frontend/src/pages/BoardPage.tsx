@@ -4,7 +4,7 @@ import Filters from "../components/boardPage/Filters";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Column from "../components/boardPage/Column";
-import { ColumnType, HeadingType } from "../utils/enums";
+import { ColumnType, HeadingType, Priority } from "../utils/enums";
 import TodoModel from "../components/boardPage/TodoModel";
 import { useEffect, useState } from "react";
 import { InitialValues } from "../utils/types";
@@ -18,8 +18,8 @@ const BoardPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [initialValues, setInitialValues] = useState<InitialValues>({
     title: "",
-    status: "",
-    priority: "",
+    status: ColumnType.UNDER_REVIREW,
+    priority: Priority.LOW,
     deadline: "",
     description: "",
   });

@@ -31,7 +31,7 @@ import {
   useCreateTaskMutation,
   useUpdateTaskMutation,
 } from "../../store/tasksApi";
-import { HeadingType } from "../../utils/enums";
+import { ColumnType, HeadingType, Priority } from "../../utils/enums";
 import { addTask } from "../../store/tasksSlice";
 
 interface TodoModelProps {
@@ -91,8 +91,8 @@ const TodoModel: React.FC<TodoModelProps> = ({
     onClose();
     setInitialValues({
       title: "",
-      status: "",
-      priority: "",
+      status: ColumnType.UNDER_REVIREW,
+      priority: Priority.LOW,
       deadline: "",
       description: "",
     });

@@ -2,8 +2,8 @@ import { ColumnType, Priority } from "./enums";
 
 export interface InitialValues {
   title: string;
-  status: string;
-  priority: string;
+  status: ColumnType;
+  priority: Priority;
   deadline: string;
   description: string;
 }
