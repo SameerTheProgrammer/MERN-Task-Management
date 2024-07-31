@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import createHttpError, { HttpError } from "http-errors";
+import { HttpError } from "http-errors";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
@@ -26,6 +26,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(helmet());
 app.use(compression());
 app.use(cookieParser());
@@ -42,10 +43,10 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Welcome to Task Management site");
 });
 
-app.get("/",  (req: Request, res: Response,) => {
+app.get("/", (req: Request, res: Response) => {
     res.json({
-        message:"Hello, i am backend of Taskman"
-    })
+        message: "Hello, i am backend of Taskman",
+    });
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
