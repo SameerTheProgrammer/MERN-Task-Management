@@ -127,13 +127,14 @@ const Sidebar: React.FC = () => {
               navSize={navSize}
               icon={FiHome}
               title="Dashboard"
-              active
+              
             />
             <NavItem
               path="/boards"
               navSize={navSize}
               icon={CiViewBoard}
               title="Boards"
+              active
             />
             <NavItem
               path="/"
